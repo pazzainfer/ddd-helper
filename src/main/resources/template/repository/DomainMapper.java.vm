@@ -1,0 +1,16 @@
+package com.changjinglu.lucup.activity.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.changjinglu.lucup.activity.domain.ActivityDO;
+
+/**
+ * <p>
+ * 活动信息 Mapper 接口
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+public interface ActivityMapper extends BaseMapper<ActivityDO> {
+
+}

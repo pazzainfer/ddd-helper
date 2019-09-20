@@ -1,0 +1,29 @@
+package com.changjinglu.lucup.param.activity;
+
+import com.changjinglu.api.common.request.BaseRequest;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * <p> ActivityIDParam </p>
+ * <p> 活动详情参数 </p>
+ * @author fengxiao
+ * @since 2019-07-09 19:20
+ */
+@Data
+@Accessors(chain = true)
+@ApiModel(value = "活动ID参数", parent = BaseRequest.class)
+public class ActivityIDParam extends BaseRequest {
+
+    private static final long serialVersionUID = 8518764192674419586L;
+    /**
+     * ID
+     */
+    @NotNull(message = "ID不能为空")
+    @ApiModelProperty(value = "ID", required = true)
+    private Long id;
+}

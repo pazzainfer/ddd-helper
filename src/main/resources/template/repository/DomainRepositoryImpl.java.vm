@@ -1,0 +1,68 @@
+package com.changjinglu.lucup.activity.repository;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.changjinglu.common.bean.BeanUtil;
+import com.changjinglu.lucup.activity.domain.ActivityDO;
+import com.changjinglu.lucup.activity.manager.IActivityManager;
+import com.changjinglu.lucup.activity.query.ActivityQuery;
+import com.changjinglu.lucup.domain.entity.ActivityEntity;
+import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
+import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+import com.changjinglu.lucup.interfaces.vo.PageVO;
+import org.springframework.stereotype.Component;
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * <p> ActivityRepositoryImpl </p>
+ * <p> 活动仓储实现 </p>
+ *
+ * @author fengxiao
+ * @since 2019-08-26 21:06
+ */
+@Component
+public class ActivityRepositoryImpl implements ActivityRepository {
+    @Resource
+    private IActivityManager activityManager;
+
+    @Override
+    public void create(ActivityEntity activityEntity) {
+        ActivityDO activityDO = BeanUtil.doTransfer(activityEntity, ActivityDO.class);
+        activityManager.save(activityDO);
+        activityEntity.setId(activityDO.getId());
+    }
+
+    @Override
+    public void update(ActivityEntity activityEntity) {
+        activityManager.updateById(BeanUtil.doTransfer(activityEntity, ActivityDO.class));
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        ActivityDO activityDO = new ActivityDO();
+        activityDO.setId(id);
+        activityDO.setStatus(status);
+        activityManager.updateById(activityDO);
+    }
+
+    @Override
+    public ActivityVO getById(Long id) {
+        ActivityDO activityDO = activityManager.getById(id);
+        if(activityDO != null){
+            return BeanUtil.doTransfer(activityDO, ActivityVO.class);
+        }
+        return null;
+    }
+
+    @Override
+    public PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery) {
+        IPage<ActivityDO> pageResult = activityManager.pageQuery(
+                BeanUtil.doTransfer(activityQuery, ActivityQuery.class)
+        );
+
+        List<ActivityVO> list = BeanUtil.doTransfer(pageResult.getRecords(), ActivityVO.class);
+
+        return new PageVO<>(list, pageResult.getTotal(), pageResult.getSize(), pageResult.getCurrent());
+    }
+}

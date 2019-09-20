@@ -1,0 +1,118 @@
+package com.changjinglu.lucup.domain.value;
+
+import com.changjinglu.domain.VO;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import java.util.Date;
+
+/**
+ * <p>
+ * 活动信息
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class ActivityBuildVO implements VO {
+
+    private static final long serialVersionUID = 5347551301168091696L;
+    private Long id;
+    /**
+     * 归属活动(默认0代表当前为主活动)
+     */
+    private Long pid;
+
+    /**
+     * 名称
+     */
+    private String name;
+
+    /**
+     * 活动类型/对用模板的子类型
+     */
+    private String type;
+
+    /**
+     * 活动类型名称
+     */
+    private String typeName;
+
+    /**
+     * 开始时间
+     */
+    private Date startTime;
+
+    /**
+     * 结束时间
+     */
+    private Date endTime;
+
+    /**
+     * 展示开始时间
+     */
+    private Date showStartTime;
+
+    /**
+     * 展示结束时间
+     */
+    private Date showEndTime;
+
+    /**
+     * 开奖时间
+     */
+    private Date distributeTime;
+
+    /**
+     * 状态 {@link com.changjinglu.lucup.constant.CommonStatus CommonStatus}
+     */
+    private Integer status;
+
+    /**
+     * 扩展信息(json格式)
+     */
+    private String attributes;
+
+    /**
+     * 素材模板ID
+     */
+    private Long materialTempId;
+
+    /**
+     * 素材模板名称
+     */
+    private String materialTempName;
+
+    /**
+     * 素材信息
+     */
+    private String materials;
+
+    /**
+     * 品牌logo
+     */
+    private String brandLogo;
+
+    /**
+     * 赞助商logo
+     */
+    private String sponsorLogo;
+
+    /**
+     * 备注
+     */
+    private String memo;
+
+    /**
+     * 创建人
+     */
+    private String creator;
+
+    /**
+     * 修改人
+     */
+    private String modifier;
+}

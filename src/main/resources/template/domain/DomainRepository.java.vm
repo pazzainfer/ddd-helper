@@ -1,0 +1,45 @@
+package com.changjinglu.lucup.interfaces.repository;
+
+import com.changjinglu.lucup.domain.entity.ActivityEntity;
+import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+import com.changjinglu.lucup.interfaces.vo.PageVO;
+
+/**
+ * <p> ActivityRepository </p>
+ * <p> 活动仓储接口 </p>
+ * @since 2019-08-26 11:17
+ * @author fengxiao
+ */
+public interface ActivityRepository {
+    /**
+     * 创建活动
+     * @param activityEntity
+     */
+    void create(ActivityEntity activityEntity);
+    /**
+     * 更新活动
+     * @param activityEntity
+     */
+    void update(ActivityEntity activityEntity);
+    /**
+     * 修改活动状态
+     * @param id
+     * @param status
+     */
+    void updateStatus(Long id, Integer status);
+
+    /**
+     * 查询详情
+     * @param id
+     * @return
+     */
+    ActivityVO getById(Long id);
+
+    /**
+     * 分页查询
+     * @param activityQuery
+     * @return
+     */
+    PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery);
+}

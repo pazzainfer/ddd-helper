@@ -1,0 +1,17 @@
+package com.changjinglu.lucup.activity.manager;
+
+import com.changjinglu.common.mybatis.ICommonManager;
+import com.changjinglu.lucup.activity.domain.ActivityDO;
+import com.changjinglu.lucup.activity.query.ActivityQuery;
+
+/**
+ * <p>
+ * 活动信息 服务类
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+public interface IActivityManager extends ICommonManager<ActivityDO, ActivityQuery> {
+
+}

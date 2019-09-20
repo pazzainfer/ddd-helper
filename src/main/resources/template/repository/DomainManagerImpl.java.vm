@@ -1,0 +1,20 @@
+package com.changjinglu.lucup.activity.manager.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.changjinglu.lucup.activity.domain.ActivityDO;
+import com.changjinglu.lucup.activity.manager.IActivityManager;
+import com.changjinglu.lucup.activity.mapper.ActivityMapper;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * 活动信息 服务实现类
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+@Service
+public class ActivityManagerImpl extends ServiceImpl<ActivityMapper, ActivityDO> implements IActivityManager {
+
+}

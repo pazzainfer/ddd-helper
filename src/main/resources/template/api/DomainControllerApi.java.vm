@@ -1,0 +1,57 @@
+package com.changjinglu.lucup.api.activity;
+
+import com.changjinglu.api.common.response.BaseResult;
+import com.changjinglu.api.common.response.PaginatorResult;
+import com.changjinglu.api.common.response.PlainResult;
+import com.changjinglu.lucup.param.activity.*;
+import com.changjinglu.lucup.result.activity.ActivityDTO;
+
+/**
+ * <p>
+ * 活动信息 API接口
+ * </p>
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+public interface ActivityControllerApi {
+
+    /**
+     * 活动创建
+     * @param param
+     * @return
+     * @throws RuntimeException
+     */
+    PlainResult<ActivityDTO> create(ActivityCreateParam param) throws RuntimeException;
+
+    /**
+     * 活动修改
+     * @param param
+     * @return
+     * @throws RuntimeException
+     */
+    PlainResult<ActivityDTO> update(ActivityUpdateParam param) throws RuntimeException;
+
+    /**
+     * 状态变更
+     * @param param
+     * @return
+     * @throws RuntimeException
+     */
+    BaseResult updateStatus(ActivityUpdateStatusParam param) throws RuntimeException;
+
+    /**
+     * 活动详情查询
+     * @param param
+     * @return
+     * @throws RuntimeException
+     */
+    PlainResult<ActivityDTO> detail(ActivityDetailParam param) throws RuntimeException;
+
+    /**
+     * 活动分页查询
+     * @param param
+     * @return
+     * @throws RuntimeException
+     */
+    PaginatorResult<ActivityDTO> pageQuery(ActivityPageQueryParam param) throws RuntimeException;
+}

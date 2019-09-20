@@ -1,0 +1,121 @@
+package com.changjinglu.lucup.controller.activity;
+
+import com.changjinglu.api.common.response.*;
+import com.changjinglu.api.common.vo.ListWithPaginatorVO;
+import com.changjinglu.common.bean.BeanUtil;
+import com.changjinglu.lucup.api.activity.PlayerControllerApi;
+import com.changjinglu.lucup.domain.entity.PlayerEntity;
+import com.changjinglu.lucup.domain.factory.PlayerFactory;
+import com.changjinglu.lucup.domain.value.PlayerBuildVO;
+import com.changjinglu.lucup.interfaces.param.PlayerQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.vo.PageVO;
+import com.changjinglu.lucup.param.activity.*;
+import com.changjinglu.lucup.result.activity.PlayerDTO;
+import com.changjinglu.lucup.service.api.PlayerService;
+import com.changjinglu.lucup.interfaces.vo.PlayerVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * <p>
+ * 活动玩家 前端控制器
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-06
+ */
+@RestController
+@RequestMapping("/activity/player")
+@Api(value = "活动玩家API")
+@Slf4j
+public class PlayerController implements PlayerControllerApi {
+
+    @Resource
+    private PlayerService playerService;
+    @Resource
+    private PlayerFactory playerFactory;
+
+    @ApiOperation(value = "活动玩家详情", notes = "活动玩家详情")
+    @PostMapping(value = "/detail")
+    public PlainResult<PlayerDTO> detail(@RequestBody @ApiParam @Validated PlayerDetailParam param) throws RuntimeException {
+        return new PlainResult<>(BeanUtil.doTransfer(playerService.getById(param.getId()), PlayerDTO.class));
+    }
+
+    @ApiOperation(value = "活动玩家登记", notes = "玩家登记报名")
+    @PostMapping(value = "/sign")
+    @Transactional(rollbackFor = Exception.class)
+    public PlainResult<PlayerDTO> sign(@RequestBody @ApiParam @Validated PlayerSignParam param) throws RuntimeException {
+        PlayerEntity playerEntity = playerFactory.perfect(BeanUtil.doTransfer(param, PlayerBuildVO.class));
+        playerEntity.create();
+        return new PlainResult<>(BeanUtil.doTransfer(playerEntity, PlayerDTO.class));
+    }
+
+    @ApiOperation(value = "活动玩家更新", notes = "活动玩家更新")
+    @PostMapping(value = "/update")
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult update(@RequestBody @ApiParam @Validated PlayerUpdateParam param) throws RuntimeException {
+        PlayerEntity playerEntity = playerFactory.perfect(BeanUtil.doTransfer(param, PlayerBuildVO.class));
+        playerEntity.update();
+        return new PlainResult<>(BeanUtil.doTransfer(playerEntity, PlayerDTO.class));
+    }
+
+    @ApiOperation(value = "活动玩家审核", notes = "活动玩家审核")
+    @PostMapping(value = "/audit")
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult audit(@RequestBody @ApiParam @Validated PlayerAuditParam param) throws RuntimeException {
+        PlayerEntity playerEntity = playerFactory.buildWithIdAndStatusAndReason(
+                param.getId(), param.getStatus(), param.getReason()
+        );
+        playerEntity.update();
+        return new BaseResult();
+    }
+
+    @ApiOperation(value = "活动玩家得分更新", notes = "活动玩家得分更新")
+    @PostMapping(value = "/updateScore")
+    @Transactional(rollbackFor = Exception.class)
+    public BaseResult updateScore(@RequestBody @ApiParam @Validated PlayerUpdateScoreParam param) throws RuntimeException {
+        PlayerEntity playerEntity = playerFactory.buildWithIdAndScore(
+                param.getId(), param.getScore().doubleValue()
+        );
+        playerEntity.update();
+        return new BaseResult();
+    }
+
+    @ApiOperation(value = "综合查询参与玩家列表", notes = "综合查询条件查询参与玩家")
+    @PostMapping(value = "/query")
+    public ListResult<PlayerDTO> query(
+            @RequestBody @ApiParam @Validated PlayerQueryParam param) throws RuntimeException {
+        PlayerQueryRepositoryParam playerQuery =
+                new PlayerQueryRepositoryParam();
+        BeanUtil.doTransfer(param, playerQuery);
+        return new ListResult<>(BeanUtil.doTransfer(playerService.query(playerQuery), PlayerDTO.class));
+    }
+
+    @ApiOperation(value = "分页查询参与玩家列表", notes = "分页查询条件查询参与玩家")
+    @PostMapping(value = "/pageQuery")
+    public PaginatorResult<PlayerDTO> pageQuery(
+            @RequestBody @ApiParam @Validated PlayerPageQueryParam param) throws RuntimeException {
+        PlayerQueryRepositoryParam playerQuery =
+                new PlayerQueryRepositoryParam();
+        BeanUtil.doTransfer(param, playerQuery);
+        PageVO<PlayerVO> pageVO = playerService.pageQuery(playerQuery);
+
+        Paginator paginator = new Paginator((int) pageVO.getCurrent(),
+                (int) pageVO.getSize(), (int) pageVO.getTotal());
+        List<PlayerDTO> list = BeanUtil.doTransfer(pageVO.getRecords(), PlayerDTO.class);
+
+        ListWithPaginatorVO<PlayerDTO> paginatorVO = new ListWithPaginatorVO<>(paginator, list);
+
+        return new PaginatorResult<>(paginatorVO);
+    }
+}

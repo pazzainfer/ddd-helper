@@ -1,0 +1,39 @@
+package com.changjinglu.lucup.service.api;
+
+import com.changjinglu.lucup.interfaces.vo.PageVO;
+import com.changjinglu.lucup.domain.entity.ActivityEntity;
+import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+
+/**
+ * <p> ActivityService </p>
+ * <p> 活动服务接口 </p>
+ *
+ * @author fengxiao
+ * @since 2019-08-26 15:27
+ */
+public interface ActivityService {
+    /**
+     * 创建
+     * @param activityEntity
+     */
+    void create(ActivityEntity activityEntity);
+    /**
+     * 修改
+     * @param activityEntity
+     */
+    void update(ActivityEntity activityEntity);
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    ActivityVO getById(Long id);
+
+    /**
+     * 分页查询
+     * @param activityQuery
+     * @return
+     */
+    PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery);
+}

@@ -1,0 +1,129 @@
+package com.changjinglu.lucup.param.activity;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.changjinglu.api.common.request.BaseRequest;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
+
+/**
+ * <p> ActivityUpdateParam </p>
+ * <p> 活动修改参数 </p>
+ * @author fengxiao
+ * @since 2019-07-09 19:20
+ */
+@Data
+@Accessors(chain = true)
+@ApiModel(value = "活动修改参数", parent = BaseRequest.class)
+public class ActivityUpdateParam extends BaseRequest {
+
+    private static final long serialVersionUID = -6373269890712071227L;
+    /**
+     * ID
+     */
+    @NotNull(message = "ID不能为空")
+    @ApiModelProperty(value = "ID", required = true)
+    private Long id;
+
+    /**
+     * 名称
+     */
+    @ApiModelProperty(value = "名称", required = true)
+    private String name;
+
+    /**
+     * 开始时间
+     */
+    @ApiModelProperty(value = "开始时间", dataType = "java.lang.String", example = "2019-01-01 00:00:00", required = true)
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startTime;
+
+    /**
+     * 结束时间
+     */
+    @ApiModelProperty(value = "结束时间", dataType = "java.lang.String", example = "2019-01-01 00:00:00", required = true)
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endTime;
+
+    /**
+     * 展示开始时间
+     */
+    @ApiModelProperty(value = "展示开始时间", dataType = "java.lang.String", example = "2019-01-01 00:00:00")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date showStartTime;
+
+    /**
+     * 展示结束时间
+     */
+    @ApiModelProperty(value = "展示结束时间", dataType = "java.lang.String", example = "2019-01-01 00:00:00")
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date showEndTime;
+
+    /**
+     * 开奖时间
+     */
+    @ApiModelProperty(value = "开奖时间", dataType = "java.lang.String", example = "2019-01-01 00:00:00")
+    @JSONField (format="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date distributeTime;
+
+    /**
+     * 素材模板ID
+     */
+    @ApiModelProperty(value = "素材模板ID")
+    private Long materialTempId;
+
+    /**
+     * 素材模板名称
+     */
+    @ApiModelProperty(value = "素材模板名称")
+    private String materialTempName;
+
+    /**
+     * 素材信息
+     */
+    @Pattern(regexp = "^\\{.*\\}$", message = "素材信息非json对象格式")
+    @ApiModelProperty(value = "素材信息")
+    private String materials;
+
+    /**
+     * 扩展信息
+     */
+    @Pattern(regexp = "^\\{.*\\}$", message = "扩展信息非json对象格式")
+    @ApiModelProperty(value = "扩展信息")
+    private String attributes;
+
+    /**
+     * 品牌logo
+     */
+    @ApiModelProperty(value = "品牌logo")
+    private String brandLogo;
+
+    /**
+     * 赞助商logo
+     */
+    @ApiModelProperty(value = "赞助商logo")
+    private String sponsorLogo;
+
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    private String memo;
+
+    /**
+     * 修改人
+     */
+    @ApiModelProperty(value = "修改人")
+    private String modifier;
+}

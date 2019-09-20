@@ -1,0 +1,43 @@
+<idea-plugin>
+    <id>com.changjinglu.domain.plugins</id>
+    <name>领域驱动模型插件</name>
+    <version>1.0</version>
+    <vendor email="fengxiao@changjinglu.net" url="http://www.changjinglu.net">ChangJingLu</vendor>
+
+    <description><![CDATA[
+      <p>长颈鹿公司基于ddd领取驱动模型设计的代码框架，IDEA工具插件</p>
+      <p>@Overwrite www.changjinglu.net</P>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      <p>1.0.0 project start 初始化DDD代码工具插件，插件基础框架，创建基础代码生成器Action</p>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="172.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="changjinglu.ddd" text="DDD" description="领域驱动设计插件">
+            <action
+                    id="com.changjinglu.domain.plugins.action.GeneratorAction"
+                    class="com.changjinglu.plugins.ddd.GeneratorAction"
+                    text="代码生成"
+                    description="领域驱动设计框架代码生成" >
+            </action>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+    </actions>
+
+</idea-plugin>

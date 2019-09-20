@@ -1,0 +1,46 @@
+package com.changjinglu.lucup.service.activity.impl;
+
+import com.changjinglu.lucup.domain.entity.ActivityEntity;
+import com.changjinglu.lucup.domain.factory.ActivityFactory;
+import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
+import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+import com.changjinglu.lucup.interfaces.vo.PageVO;
+import com.changjinglu.lucup.service.api.ActivityService;
+import org.springframework.stereotype.Component;
+import javax.annotation.Resource;
+
+/**
+ * 活动服务实现
+ * @author fengxiao
+ * @since 2019-06-18 10:52
+ */
+@Component
+public class ActivityServiceImpl implements ActivityService {
+    @Resource
+    private ActivityFactory activityFactory;
+    @Resource
+    private ActivityRepository activityRepository;
+
+    @Override
+    public void create(ActivityEntity activityEntity) {
+        activityEntity.create();
+    }
+
+    @Override
+    public void update(ActivityEntity activityEntity) {
+        activityEntity.update();
+    }
+
+    @Override
+    public ActivityVO getById(Long id) {
+        return activityRepository.getById(id);
+    }
+
+
+    @Override
+    public PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery) {
+        return activityRepository.pageQuery(activityQuery);
+    }
+
+}

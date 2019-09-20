@@ -1,0 +1,38 @@
+package com.changjinglu.lucup.domain.factory;
+
+import com.changjinglu.domain.DomainFactory;
+import com.changjinglu.lucup.domain.entity.ActivityEntity;
+import com.changjinglu.lucup.domain.value.ActivityBuildVO;
+import com.changjinglu.common.bean.BeanUtil;
+import org.springframework.stereotype.Component;
+
+/**
+ * <p>
+ * 活动信息
+ * </p>
+ *
+ * @author fengxiao
+ * @since 2019-06-03
+ */
+@Component
+public class ActivityFactory implements DomainFactory<ActivityBuildVO, ActivityEntity> {
+
+    public ActivityEntity buildWithId(Long id) {
+        ActivityEntity entity = this.perfect(new ActivityBuildVO());
+
+        entity.setId(id);
+
+        return entity;
+    }
+
+    @Override
+    public ActivityEntity perfect(ActivityBuildVO buildVO) {
+        ActivityEntity entity = DomainFactory.get(ActivityEntity.class);
+
+        // 设置属性
+        BeanUtil.doTransfer(buildVO, entity);
+
+        return entity;
+    }
+
+}
