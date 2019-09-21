@@ -32,7 +32,7 @@
         <group id="changjinglu.ddd" text="DDD" description="领域驱动设计插件">
             <action
                     id="com.changjinglu.domain.plugins.action.GeneratorAction"
-                    class="com.changjinglu.plugins.ddd.GeneratorAction"
+                    class="com.changjinglu.domain.plugins.action.GeneratorAction"
                     text="代码生成"
                     description="领域驱动设计框架代码生成" >
             </action>

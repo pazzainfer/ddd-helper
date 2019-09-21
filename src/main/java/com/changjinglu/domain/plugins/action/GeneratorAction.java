@@ -22,7 +22,7 @@ public class GeneratorAction extends AnAction {
         //super("Text _Boxes");
         // Set the menu item name, description and icon.
         super("代码生成","领域驱动设计spring-boot框架代码生成",
-                IconLoader.getIcon("/com/changjinglu/plugins/ddd/ddd16.png"));
+                IconLoader.getIcon("/icons/ddd16.png"));
     }
 
     @Override
