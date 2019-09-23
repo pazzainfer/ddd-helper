@@ -3,7 +3,6 @@ package com.changjinglu.domain.plugins.generate;
 import com.alibaba.fastjson.JSON;
 import com.changjinglu.domain.plugins.form.GeneratorConfigEntity;
 import com.changjinglu.domain.plugins.form.GeneratorConfigForm;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
@@ -11,9 +10,11 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+
 /**
  * <p>SampleDialogWrapper</p>
  * <p>生成器向导窗口</p>
+ *
  * @author fengxioa
  * @since 2019/8/31 13:17
  */

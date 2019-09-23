@@ -3,11 +3,16 @@ package com.changjinglu.domain.plugins.form;
 /**
  * <p>GeneratorConfigEntity</p>
  * <p>代码生成配置实体</p>
+ *
  * @author fengxioa
  * @since 2019/9/1 0:21
  */
 public class GeneratorConfigEntity {
-    public GeneratorConfigEntity(){};
+    public GeneratorConfigEntity() {
+    }
+
+    ;
+
     public GeneratorConfigEntity(String dbType, String driver, String url, String username, String password, String[] tableNames) {
         this.dbType = dbType;
         this.driver = driver;

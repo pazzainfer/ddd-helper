@@ -1,6 +1,9 @@
 package com.changjinglu.domain.plugins.action;
 
+import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.generate.CodeGenerator;
+import com.changjinglu.domain.plugins.util.Constants;
+import com.changjinglu.domain.plugins.util.PropertiesConstants;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -10,6 +13,7 @@ import com.intellij.openapi.util.IconLoader;
 /**
  * <p>GeneratorAction</p>
  * <p>代码生成器Action</p>
+ *
  * @author fengxioa
  * @since 2019/8/31 11:51
  */
@@ -21,8 +25,9 @@ public class GeneratorAction extends AnAction {
         // Set the menu item name.
         //super("Text _Boxes");
         // Set the menu item name, description and icon.
-        super("代码生成","领域驱动设计spring-boot框架代码生成",
-                IconLoader.getIcon("/icons/ddd16.png"));
+        super(LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_ACTION_TITLE),
+                LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_ACTION_TITLE),
+                IconLoader.getIcon(Constants.ICON_GENERATE));
     }
 
     @Override
@@ -36,7 +41,7 @@ public class GeneratorAction extends AnAction {
             //if(new GeneratorDialogWrapper(project).showAndGet()) {
             // user pressed ok
             //}
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -21,17 +21,17 @@ public class CodeGenerator {
         new CodeGenerator().test("D:/Code/temp");
     }
 
-    static{
+    static {
         //加载路径
         Properties properties = new Properties();
         try {
-            properties.load(new InputStreamReader(CodeGenerator.class.getClassLoader().getResourceAsStream("generator.properties"),"utf-8"));
+            properties.load(new InputStreamReader(CodeGenerator.class.getClassLoader().getResourceAsStream("generator.properties"), "utf-8"));
             mapperPath = properties.getProperty("gen.mapper.path");
             servicePath = properties.getProperty("gen.service.path");
-            serviceImplPath = servicePath+"\\impl";
+            serviceImplPath = servicePath + "\\impl";
             controllerPath = properties.getProperty("gen.controller.path");
             queryPath = properties.getProperty("gen.query.path");
-            jspPath = properties.getProperty("gen.jsp.path")+"\\domain";
+            jspPath = properties.getProperty("gen.jsp.path") + "\\domain";
             jsPath = properties.getProperty("gen.js.path");
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class CodeGenerator {
     //是否覆盖
     private static final boolean FLAG = true;
 
-    public void test(String projectPath) throws Exception{
+    public void test(String projectPath) throws Exception {
 
         //模板上下文
         VelocityContext context = new VelocityContext();
@@ -80,7 +80,7 @@ public class CodeGenerator {
                 //生成代码
                 //生成的文件名
                 String fileName = templateName.substring(0, templateName.lastIndexOf(".vm"));
-                String filePath = projectPath + paths[i]+"\\"+fileName;
+                String filePath = projectPath + paths[i] + File.separator+ fileName;
                 filePath = filePath.replaceAll("domain", domainName).
                         replaceAll("Domain", DomainName);
                 System.out.println("filePath=" + filePath);
@@ -99,10 +99,17 @@ public class CodeGenerator {
                     parentFile.mkdirs();
                 }
                 Writer writer = new FileWriter(file);
-                //拿到模板，设置编码
-                velocityEngine.mergeTemplate("template/" +templateName,"utf-8",context,writer);
-                writer.close();
 
+                try (InputStream input = getClass().getClassLoader().getResourceAsStream("template" + File.separator + templateName)) {
+                    byte[] buffer = new byte[input.available()];
+                    input.read(buffer);
+                    velocityEngine.evaluate(context, writer, "repository", new String(buffer, "utf-8"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+                writer.flush();
+                writer.close();
             }
 
         }
