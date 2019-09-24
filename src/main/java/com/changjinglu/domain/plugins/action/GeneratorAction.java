@@ -15,7 +15,7 @@ import com.intellij.openapi.util.IconLoader;
 /**
  * <p>GeneratorAction</p>
  * <p>代码生成器Action</p>
- * @author fengxioa
+ * @author fengxiao
  * @since 2019/8/31 11:51
  */
 public class GeneratorAction extends AnAction {

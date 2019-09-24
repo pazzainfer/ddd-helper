@@ -4,13 +4,18 @@ import com.changjinglu.domain.plugins.Holder;
 import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.entity.GeneratorFile;
 import com.changjinglu.domain.plugins.entity.Table;
+import com.changjinglu.domain.plugins.generate.GeneratorRunner;
 import com.changjinglu.domain.plugins.util.WindowUtil;
+import com.intellij.ide.util.PropertiesComponent;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.ui.Messages;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.List;
+
+import static com.changjinglu.domain.plugins.util.KeyUtil.createKey;
 
 /**
  * <p> SelectFilesFrame </p>
@@ -21,6 +26,7 @@ import java.util.List;
 public class SelectFilesFrame extends JFrame {
 
     private List<Table> tableList;
+    private SelectFiles selectTablesHolder;
 
     public SelectFilesFrame(List<Table> tableList, List<GeneratorFile> fileList) {
         super(LocaleContextHolder.format("select_files"));
@@ -28,7 +34,8 @@ public class SelectFilesFrame extends JFrame {
         this.setMinimumSize(new Dimension(600, 400));
 
         int rowCount = fileList.size();
-        SelectFiles selectTablesHolder = new SelectFiles(fileList);
+        selectTablesHolder = new SelectFiles(fileList);
+        initFormField();
         JTable table = selectTablesHolder.getTblTableSchema();
         table.setModel(new AbstractTableModel() {
             private static final long serialVersionUID = 8101289068997810922L;
@@ -122,6 +129,18 @@ public class SelectFilesFrame extends JFrame {
         });
         // 下一页
         selectTablesHolder.getBtnGenerate().addActionListener(event -> {
+            String basePackage = selectTablesHolder.getBasePackage().getText().trim();
+            String removedPrefix = selectTablesHolder.getRemovedPrefix().getText().trim();
+            String module = selectTablesHolder.getModuleName().getText().trim();
+            if (basePackage.isEmpty()) {
+                selectTablesHolder.getBasePackage().requestFocus();
+                return;
+            }
+            if (module.isEmpty()) {
+                selectTablesHolder.getModuleName().requestFocus();
+                return;
+            }
+            saveFormField(basePackage, removedPrefix, module);
             if (fileList.stream().noneMatch(GeneratorFile::isSelected)) {
                 Messages.showWarningDialog(Holder.getEvent().getProject(),
                         LocaleContextHolder.format("at_least_select_one_file"),
@@ -131,7 +150,31 @@ public class SelectFilesFrame extends JFrame {
             // 释放窗口
             SelectFilesFrame.this.dispose();
             // 开始生成
-//            ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(fileList, config));
+            ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(tableList, fileList));
         });
+    }
+
+
+    /**
+     * 保存表单数据
+     * @param basePackage
+     * @param removedEntityPrefix
+     * @param moduleName
+     */
+    private void saveFormField(String basePackage, String removedEntityPrefix, String moduleName) {
+        PropertiesComponent applicationProperties = Holder.getApplicationProperties();
+        applicationProperties.setValue(createKey("basePackage"), basePackage);
+        applicationProperties.setValue(createKey("removedEntityPrefix"), removedEntityPrefix);
+        applicationProperties.setValue(createKey("moduleName"), moduleName);
+    }
+
+    /**
+     * 初始化表单数据展示
+     */
+    private void initFormField() {
+        PropertiesComponent applicationProperties = Holder.getApplicationProperties();
+        selectTablesHolder.getBasePackage().setText(applicationProperties.getValue(createKey("basePackage"), ""));
+        selectTablesHolder.getRemovedPrefix().setText(applicationProperties.getValue(createKey("removedEntityPrefix"), ""));
+        selectTablesHolder.getModuleName().setText(applicationProperties.getValue(createKey("moduleName"), ""));
     }
 }
