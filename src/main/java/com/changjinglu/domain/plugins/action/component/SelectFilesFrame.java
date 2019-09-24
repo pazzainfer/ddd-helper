@@ -6,33 +6,35 @@ import com.changjinglu.domain.plugins.entity.GeneratorFile;
 import com.changjinglu.domain.plugins.entity.Table;
 import com.changjinglu.domain.plugins.util.WindowUtil;
 import com.intellij.openapi.ui.Messages;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.List;
+
 /**
- * <p> SelectTablesFrame </p>
- * <p> 数据库表界面 </p>
- * @since 2019/9/24 2:55 下午
+ * <p> SelectFilesFrame </p>
+ * <p> 选择代码文件并生成界面 </p>
+ * @since 2019/9/24 7:06 下午
  * @author fengxiao
  */
-public class SelectTablesFrame extends JFrame {
+public class SelectFilesFrame extends JFrame {
 
-    public SelectTablesFrame(List<Table> tableList) {
-        super(LocaleContextHolder.format("select_database_tables"));
+    private List<Table> tableList;
+
+    public SelectFilesFrame(List<Table> tableList, List<GeneratorFile> fileList) {
+        super(LocaleContextHolder.format("select_files"));
+        this.tableList = tableList;
         this.setMinimumSize(new Dimension(600, 400));
 
-        int rowCount = tableList.size();
-        SelectTables selectTablesHolder = new SelectTables(tableList);
+        int rowCount = fileList.size();
+        SelectFiles selectTablesHolder = new SelectFiles(fileList);
         JTable table = selectTablesHolder.getTblTableSchema();
         table.setModel(new AbstractTableModel() {
-            private static final long serialVersionUID = 8974669315458199207L;
+            private static final long serialVersionUID = 8101289068997810922L;
             String[] columns = {
-                    LocaleContextHolder.format("table_selected"),
-                    LocaleContextHolder.format("table_sequence"),
-                    LocaleContextHolder.format("table_table_name"),
-                    LocaleContextHolder.format("table_class_name"),
-                    LocaleContextHolder.format("table_class_comment")
+                    LocaleContextHolder.format("file_table_selected"),
+                    LocaleContextHolder.format("file_table_type")
             };
 
             @Override
@@ -52,7 +54,7 @@ public class SelectTablesFrame extends JFrame {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 0 || columnIndex == 3 || columnIndex == 4;
+                return columnIndex == 0;
             }
 
             @Override
@@ -60,8 +62,6 @@ public class SelectTablesFrame extends JFrame {
                 switch (columnIndex) {
                     case 0:
                         return Boolean.class;
-                    case 1:
-                        return Integer.class;
                     default:
                         return String.class;
                 }
@@ -71,15 +71,9 @@ public class SelectTablesFrame extends JFrame {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return tableList.get(rowIndex).isSelected();
+                        return fileList.get(rowIndex).isSelected();
                     case 1:
-                        return rowIndex + 1;
-                    case 2:
-                        return tableList.get(rowIndex).getTableName();
-                    case 3:
-                        return tableList.get(rowIndex).getEntityName();
-                    case 4:
-                        return tableList.get(rowIndex).getTableComment();
+                        return fileList.get(rowIndex).getType().getDesc();
                     default:
                         throw new IllegalStateException("无法识别的列索引:" + columnIndex);
                 }
@@ -89,13 +83,7 @@ public class SelectTablesFrame extends JFrame {
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        tableList.get(rowIndex).setSelected((Boolean) aValue);
-                        break;
-                    case 3:
-                        tableList.get(rowIndex).setEntityName(aValue.toString());
-                        break;
-                    case 4:
-                        tableList.get(rowIndex).setTableComment(aValue.toString());
+                        fileList.get(rowIndex).setSelected((Boolean) aValue);
                         break;
                     default:
                         break;
@@ -104,7 +92,6 @@ public class SelectTablesFrame extends JFrame {
         });
         table.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
         table.getColumnModel().getColumn(0).setMaxWidth(60);
-        table.getColumnModel().getColumn(1).setMaxWidth(40);
         this.setContentPane(selectTablesHolder.getRootComponent());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(WindowUtil.getParentWindow(Holder.getEvent().getProject()));
@@ -114,42 +101,37 @@ public class SelectTablesFrame extends JFrame {
         selectTablesHolder.getBtnCancel().addActionListener(event -> this.dispose());
         // 选中所有行
         selectTablesHolder.getBtnSelectAll().addActionListener(event -> {
-            for (Table t : tableList) {
+            for (GeneratorFile t : fileList) {
                 t.setSelected(true);
             }
             table.updateUI();
         });
         // 全不选
         selectTablesHolder.getBtnSelectNone().addActionListener(event -> {
-            for (Table t : tableList) {
+            for (GeneratorFile t : fileList) {
                 t.setSelected(false);
             }
             table.updateUI();
         });
         // 反选
         selectTablesHolder.getBtnSelectOther().addActionListener(event -> {
-            for (Table t : tableList) {
+            for (GeneratorFile t : fileList) {
                 t.setSelected(!t.isSelected());
             }
             table.updateUI();
         });
         // 下一页
-        selectTablesHolder.getBtnNext().addActionListener(event -> {
-            if (tableList.stream().noneMatch(Table::isSelected)) {
+        selectTablesHolder.getBtnGenerate().addActionListener(event -> {
+            if (fileList.stream().noneMatch(GeneratorFile::isSelected)) {
                 Messages.showWarningDialog(Holder.getEvent().getProject(),
-                        LocaleContextHolder.format("at_least_select_one_table"),
+                        LocaleContextHolder.format("at_least_select_one_file"),
                         LocaleContextHolder.format("prompt"));
                 return;
             }
             // 释放窗口
-            SelectTablesFrame.this.dispose();
-
-            // 显示选择文件窗口
-            new SelectFilesFrame(tableList, GeneratorFile.buildByEnum());
-            // 释放数据库设置窗口
-            this.dispose();
+            SelectFilesFrame.this.dispose();
             // 开始生成
-//            ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(tableList, config));
+//            ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(fileList, config));
         });
     }
 }

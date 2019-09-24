@@ -1,6 +1,6 @@
 package com.changjinglu.domain.plugins.adapter;
 
-import com.changjinglu.domain.plugins.util.DataSource;
+import com.changjinglu.domain.plugins.entity.DataSource;
 import lombok.Getter;
 
 /**

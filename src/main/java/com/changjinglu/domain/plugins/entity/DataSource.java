@@ -1,4 +1,4 @@
-package com.changjinglu.domain.plugins.util;
+package com.changjinglu.domain.plugins.entity;
 
 /**
  * <p> DataSource </p>
