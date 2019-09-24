@@ -7,18 +7,14 @@ import java.util.Arrays;
 import static java.util.stream.Collectors.joining;
 
 /**
- * <p> Key </p>
+ * <p> KeyUtil </p>
  * <p> 插件国际化资源Key工具 </p>
- *
  * @author fengxiao
  * @since 2019/9/23 10:07 上午
  */
-public enum Key {
-    ;
-
+public class KeyUtil {
     /**
      * 创建统一前缀的资源Key
-     *
      * @param name
      * @return
      */

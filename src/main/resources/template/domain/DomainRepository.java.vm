@@ -1,7 +1,7 @@
 package com.changjinglu.lucup.interfaces.repository;
 
 import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.query.DomainRepositoryQuery;
 import com.changjinglu.lucup.interfaces.vo.ActivityVO;
 import com.changjinglu.lucup.interfaces.vo.PageVO;
 
@@ -41,5 +41,5 @@ public interface ActivityRepository {
      * @param activityQuery
      * @return
      */
-    PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery);
+    PageVO<ActivityVO> pageQuery(DomainRepositoryQuery activityQuery);
 }

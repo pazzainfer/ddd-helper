@@ -2,7 +2,7 @@ package com.changjinglu.lucup.service.activity.impl;
 
 import com.changjinglu.lucup.domain.entity.ActivityEntity;
 import com.changjinglu.lucup.domain.factory.ActivityFactory;
-import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.query.DomainRepositoryQuery;
 import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
 import com.changjinglu.lucup.interfaces.vo.ActivityVO;
 import com.changjinglu.lucup.interfaces.vo.PageVO;
@@ -39,7 +39,7 @@ public class ActivityServiceImpl implements ActivityService {
 
 
     @Override
-    public PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery) {
+    public PageVO<ActivityVO> pageQuery(DomainRepositoryQuery activityQuery) {
         return activityRepository.pageQuery(activityQuery);
     }
 

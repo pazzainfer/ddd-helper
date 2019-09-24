@@ -51,6 +51,7 @@ public interface DriverAdapter {
      * @param port             port
      * @param username         username
      * @param database         database
+     * @param useSSL           useSSL
      */
-    String toConnectionUrl(String oldConnectionUrl, String host, String port, String username, String database);
+    String toConnectionUrl(String oldConnectionUrl, String host, String port, String username, String database, boolean useSSL);
 }

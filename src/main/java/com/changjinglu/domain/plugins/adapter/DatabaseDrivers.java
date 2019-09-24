@@ -38,9 +38,9 @@ public enum DatabaseDrivers {
     ;
     public static final String CLASSPATH_PREFIX = "classpath:";
     @Getter
-    private final String vendor;
+    private final String type;
     @Getter
-    private final DataSource vendor2;
+    private final DataSource type2;
     @Getter
     private final String version;
     @Getter
@@ -50,10 +50,10 @@ public enum DatabaseDrivers {
     @Getter
     private final String url;
 
-    DatabaseDrivers(String vendor, DataSource vendor2, String version, String driverClass,
+    DatabaseDrivers(String type, DataSource type2, String version, String driverClass,
                     DriverAdapter driverAdapter, String url) {
-        this.vendor = vendor;
-        this.vendor2 = vendor2;
+        this.type = type;
+        this.type2 = type2;
         this.version = version;
         this.driverClass = driverClass;
         this.driverAdapter = driverAdapter;
@@ -66,6 +66,6 @@ public enum DatabaseDrivers {
 
     @Override
     public String toString() {
-        return vendor + "-" + version;
+        return type + "-" + version;
     }
 }

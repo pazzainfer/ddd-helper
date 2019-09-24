@@ -12,12 +12,13 @@ public abstract class AbstractDriverAdapter implements DriverAdapter {
     }
 
     @Override
-    public String toConnectionUrl(String oldConnectionUrl, String host, String port, String username, String database) {
+    public String toConnectionUrl(String oldConnectionUrl, String host, String port, String username, String database, boolean useSSL) {
         Matcher matcher = connectionUrlPattern.matcher(oldConnectionUrl);
         String params = "";
-        if (matcher.matches()) {
+        if (matcher.find()) {
             params = matcher.group(1);
         }
+        params = params.replaceAll("(useSSL=)(true|false)", "useSSL="+ useSSL);
         return toConnectionUrl(oldConnectionUrl, host, port, username, database, params);
     }
 

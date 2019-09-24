@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * <p> Table </p>
- * <p> 数据库表 </p>
+ * <p> 配置的表模型 </p>
  *
  * @author fengxiao
  * @since 2019/9/23 5:09 下午

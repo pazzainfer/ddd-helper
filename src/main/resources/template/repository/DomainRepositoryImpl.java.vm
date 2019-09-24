@@ -6,7 +6,7 @@ import com.changjinglu.lucup.activity.domain.ActivityDO;
 import com.changjinglu.lucup.activity.manager.IActivityManager;
 import com.changjinglu.lucup.activity.query.ActivityQuery;
 import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.query.DomainRepositoryQuery;
 import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
 import com.changjinglu.lucup.interfaces.vo.ActivityVO;
 import com.changjinglu.lucup.interfaces.vo.PageVO;
@@ -56,7 +56,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     }
 
     @Override
-    public PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery) {
+    public PageVO<ActivityVO> pageQuery(DomainRepositoryQuery activityQuery) {
         IPage<ActivityDO> pageResult = activityManager.pageQuery(
                 BeanUtil.doTransfer(activityQuery, ActivityQuery.class)
         );

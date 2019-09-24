@@ -1,4 +1,4 @@
-package com.changjinglu.lucup.interfaces.param;
+package com.changjinglu.lucup.interfaces.query;
 
 import com.changjinglu.common.mybatis.BaseQuery;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ActivityQueryRepositoryParam extends BaseQuery {
+public class DomainRepositoryQuery extends BaseQuery {
     /**
      * 主键ID
      */

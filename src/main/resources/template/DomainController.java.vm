@@ -7,7 +7,7 @@ import com.changjinglu.lucup.api.activity.PlayerControllerApi;
 import com.changjinglu.lucup.domain.entity.PlayerEntity;
 import com.changjinglu.lucup.domain.factory.PlayerFactory;
 import com.changjinglu.lucup.domain.value.PlayerBuildVO;
-import com.changjinglu.lucup.interfaces.param.PlayerQueryRepositoryParam;
+import com.changjinglu.lucup.interfaces.query.PlayerQueryRepositoryParam;
 import com.changjinglu.lucup.interfaces.vo.PageVO;
 import com.changjinglu.lucup.param.activity.*;
 import com.changjinglu.lucup.result.activity.PlayerDTO;
