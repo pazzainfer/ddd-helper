@@ -1,57 +1,57 @@
-package com.changjinglu.lucup.api.activity;
+package ${config.basePackage}.api#if("$!{config.moduleName}"!="").${config.moduleName}#end;
 
 import com.changjinglu.api.common.response.BaseResult;
 import com.changjinglu.api.common.response.PaginatorResult;
 import com.changjinglu.api.common.response.PlainResult;
-import com.changjinglu.lucup.param.activity.*;
-import com.changjinglu.lucup.result.activity.ActivityDTO;
+import ${config.basePackage}.param#if("$!{config.moduleName}"!="").${config.moduleName}#end.*;
+import ${config.basePackage}.result#if("$!{config.moduleName}"!="").${config.moduleName}#end.${table.entityClass}DTO;
 
 /**
  * <p>
- * 活动信息 API接口
+ * ${table.tableComment} API接口
  * </p>
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
-public interface ActivityControllerApi {
+public interface ${table.entityClass}ControllerApi {
 
     /**
-     * 活动创建
+     * ${table.tableComment}创建
      * @param param
      * @return
      * @throws RuntimeException
      */
-    PlainResult<ActivityDTO> create(ActivityCreateParam param) throws RuntimeException;
+    PlainResult<${table.entityClass}DTO> create(${table.entityClass}CreateParam param) throws RuntimeException;
 
     /**
-     * 活动修改
+     * ${table.tableComment}修改
      * @param param
      * @return
      * @throws RuntimeException
      */
-    PlainResult<ActivityDTO> update(ActivityUpdateParam param) throws RuntimeException;
+    PlainResult<${table.entityClass}DTO> update(${table.entityClass}UpdateParam param) throws RuntimeException;
 
     /**
-     * 状态变更
+     * ${table.tableComment}详情查询
      * @param param
      * @return
      * @throws RuntimeException
      */
-    BaseResult updateStatus(ActivityUpdateStatusParam param) throws RuntimeException;
+    PlainResult<${table.entityClass}DTO> detail(${table.entityClass}DetailParam param) throws RuntimeException;
 
     /**
-     * 活动详情查询
+     * 综合查询${table.tableComment}列表
      * @param param
      * @return
      * @throws RuntimeException
      */
-    PlainResult<ActivityDTO> detail(ActivityDetailParam param) throws RuntimeException;
+    ListResult<${table.entityClass}DTO> query(${table.entityClass}QueryParam param) throws RuntimeException;
 
     /**
-     * 活动分页查询
+     * ${table.tableComment}分页查询
      * @param param
      * @return
      * @throws RuntimeException
      */
-    PaginatorResult<ActivityDTO> pageQuery(ActivityPageQueryParam param) throws RuntimeException;
+    PaginatorResult<${table.entityClass}DTO> pageQuery(${table.entityClass}PageQueryParam param) throws RuntimeException;
 }

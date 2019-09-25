@@ -212,8 +212,8 @@ public class DatabaseSettingFrame extends JFrame {
             /*if (!config.getRemoveTablePrefix().isEmpty() && tableName.startsWith(config.getRemoveTablePrefix())) {
                 tableName = tableName.substring(config.getRemoveTablePrefix().length());
             }*/
-            String entityName = StringHelper.parseEntityName(tableName);
-            tableList.add(Table.from(tableSchema, entityName, true));
+            String entityClass = StringHelper.parseEntityName(tableName);
+            tableList.add(Table.from(tableSchema, entityClass, true));
         }
         new SelectTablesFrame(tableList);
     }

@@ -1,24 +1,23 @@
-package com.changjinglu.lucup.domain.factory;
+package ${config.basePackage}.domain.factory;
 
-import com.changjinglu.domain.DomainFactory;
-import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.domain.value.ActivityBuildVO;
+import com.changjinglu.domain.${table.entityClass}Factory;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.domain.value.${table.entityClass}BuildVO;
 import com.changjinglu.common.bean.BeanUtil;
 import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 活动信息
+ * ${table.tableComment}
  * </p>
- *
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Component
-public class ActivityFactory implements DomainFactory<ActivityBuildVO, ActivityEntity> {
+public class ${table.entityClass}Factory implements ${table.entityClass}Factory<${table.entityClass}BuildVO, ${table.entityClass}Entity> {
 
-    public ActivityEntity buildWithId(Long id) {
-        ActivityEntity entity = this.perfect(new ActivityBuildVO());
+    public ${table.entityClass}Entity buildWithId(Long id) {
+        ${table.entityClass}Entity entity = this.perfect(new ${table.entityClass}BuildVO());
 
         entity.setId(id);
 
@@ -26,8 +25,8 @@ public class ActivityFactory implements DomainFactory<ActivityBuildVO, ActivityE
     }
 
     @Override
-    public ActivityEntity perfect(ActivityBuildVO buildVO) {
-        ActivityEntity entity = DomainFactory.get(ActivityEntity.class);
+    public ${table.entityClass}Entity perfect(${table.entityClass}BuildVO buildVO) {
+        ${table.entityClass}Entity entity = ${table.entityClass}Factory.get(${table.entityClass}Entity.class);
 
         // 设置属性
         BeanUtil.doTransfer(buildVO, entity);

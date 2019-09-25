@@ -35,6 +35,11 @@ public class Table {
     private String tableSchema;
 
     /**
+     * 实体类名称
+     */
+    private String entityClass;
+
+    /**
      * 实体名称
      */
     private String entityName;
@@ -51,13 +56,18 @@ public class Table {
 
     private List<Column> columns;
 
-    public static Table from(TableSchema tableSchema, String entityName, boolean selected) {
+    public static Table from(TableSchema tableSchema, String entityClass, boolean selected) {
         Table table = new Table();
         table.setTableName(tableSchema.getTableName());
         table.setTableComment(tableSchema.getTableComment());
         table.setTableSchema(tableSchema.getTableSchema());
-        table.setEntityName(entityName);
+        table.setEntityClass(entityClass);
         table.setSelected(selected);
         return table;
+    }
+
+    public void setEntityClass(String entityClass){
+        this.entityClass = entityClass;
+        setEntityName((entityClass.charAt(0) + "").toLowerCase() + entityClass.substring(1));
     }
 }

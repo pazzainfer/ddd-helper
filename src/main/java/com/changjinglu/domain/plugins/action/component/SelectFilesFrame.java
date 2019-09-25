@@ -129,9 +129,14 @@ public class SelectFilesFrame extends JFrame {
         });
         // 下一页
         selectTablesHolder.getBtnGenerate().addActionListener(event -> {
+            String author = selectTablesHolder.getAuthor().getText().trim();
             String basePackage = selectTablesHolder.getBasePackage().getText().trim();
-            String removedPrefix = selectTablesHolder.getRemovedPrefix().getText().trim();
             String module = selectTablesHolder.getModuleName().getText().trim();
+            String excludeFields = selectTablesHolder.getExcludeFields().getText().trim();
+            if (author.isEmpty()) {
+                selectTablesHolder.getAuthor().requestFocus();
+                return;
+            }
             if (basePackage.isEmpty()) {
                 selectTablesHolder.getBasePackage().requestFocus();
                 return;
@@ -140,7 +145,7 @@ public class SelectFilesFrame extends JFrame {
                 selectTablesHolder.getModuleName().requestFocus();
                 return;
             }
-            saveFormField(basePackage, removedPrefix, module);
+            saveFormField(author, basePackage, module, excludeFields);
             if (fileList.stream().noneMatch(GeneratorFile::isSelected)) {
                 Messages.showWarningDialog(Holder.getEvent().getProject(),
                         LocaleContextHolder.format("at_least_select_one_file"),
@@ -157,15 +162,17 @@ public class SelectFilesFrame extends JFrame {
 
     /**
      * 保存表单数据
+     * @param author
      * @param basePackage
-     * @param removedEntityPrefix
      * @param moduleName
+     * @param excludeFields
      */
-    private void saveFormField(String basePackage, String removedEntityPrefix, String moduleName) {
+    private void saveFormField(String author, String basePackage, String moduleName, String excludeFields) {
         PropertiesComponent applicationProperties = Holder.getApplicationProperties();
         applicationProperties.setValue(createKey("basePackage"), basePackage);
-        applicationProperties.setValue(createKey("removedEntityPrefix"), removedEntityPrefix);
+        applicationProperties.setValue(createKey("author"), author);
         applicationProperties.setValue(createKey("moduleName"), moduleName);
+        applicationProperties.setValue(createKey("excludeFields"), excludeFields);
     }
 
     /**
@@ -173,8 +180,9 @@ public class SelectFilesFrame extends JFrame {
      */
     private void initFormField() {
         PropertiesComponent applicationProperties = Holder.getApplicationProperties();
+        selectTablesHolder.getAuthor().setText(applicationProperties.getValue(createKey("author"), ""));
         selectTablesHolder.getBasePackage().setText(applicationProperties.getValue(createKey("basePackage"), ""));
-        selectTablesHolder.getRemovedPrefix().setText(applicationProperties.getValue(createKey("removedEntityPrefix"), ""));
         selectTablesHolder.getModuleName().setText(applicationProperties.getValue(createKey("moduleName"), ""));
+        selectTablesHolder.getExcludeFields().setText(applicationProperties.getValue(createKey("excludeFields"), "id,createdAt,updatedAt"));
     }
 }

@@ -29,7 +29,7 @@ public class GeneratorAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent event) {
         if (event.getProject() == null) {
-            Messages.showWarningDialog("Project not activated!", "Jps Support");
+            Messages.showWarningDialog("Project not activated!", "DDD Helper");
             return;
         }
         // 注册事件
@@ -38,6 +38,6 @@ public class GeneratorAction extends AnAction {
         Holder.registerProjectProperties(PropertiesComponent.getInstance(event.getProject()));
         Holder.registerDatabaseDrivers(DatabaseDrivers.MYSQL);
 
-        DatabaseSettingFrame frame = new DatabaseSettingFrame();
+        new DatabaseSettingFrame();
     }
 }

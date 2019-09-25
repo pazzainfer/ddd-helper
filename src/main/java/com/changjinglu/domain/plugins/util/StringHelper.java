@@ -3,7 +3,9 @@ package com.changjinglu.domain.plugins.util;
 import com.changjinglu.domain.plugins.adapter.DriverAdapter;
 import com.changjinglu.domain.plugins.adapter.MysqlDriverAdapter;
 import com.changjinglu.domain.plugins.adapter.PostgreSQLDriverAdapter;
+import com.google.common.base.CaseFormat;
 import com.intellij.openapi.diagnostic.Logger;
+import org.apache.commons.lang.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -281,6 +283,21 @@ public class StringHelper {
             return parseFieldName(columnName);
         }
         return parseFieldName(columnName.substring(removePrefix.length()));
+    }
+    /**
+     * 解析表名到驼峰实体名<br>
+     * prefix_table_name -> TableName <br>
+     *
+     * @param tableName   表名称
+     * @param removePrefix 要移除的前缀
+     */
+    public static String parseTableName(String tableName, String removePrefix) {
+        String entity = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, tableName);
+        if(StringUtils.isNotBlank(removePrefix) && entity.startsWith(removePrefix)) {
+            return entity.substring(removePrefix.length());
+        } else {
+            return entity;
+        }
     }
 
     /**

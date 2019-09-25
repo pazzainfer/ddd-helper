@@ -1,4 +1,4 @@
-package com.changjinglu.lucup.param.activity;
+package ${config.basePackage}.param#if("$!{config.moduleName}"!="").${config.moduleName}#end;
 
 import com.changjinglu.api.common.request.BaseRequest;
 import io.swagger.annotations.ApiModel;
@@ -9,17 +9,17 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p> ActivityIDParam </p>
- * <p> 活动详情参数 </p>
- * @author fengxiao
- * @since 2019-07-09 19:20
+ * <p> ${table.entityClass}IDParam </p>
+ * <p> ${table.tableComment}详情参数 </p>
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "活动ID参数", parent = BaseRequest.class)
-public class ActivityIDParam extends BaseRequest {
+@ApiModel(value = "${table.tableComment}ID参数", parent = BaseRequest.class)
+public class ${table.entityClass}IDParam extends BaseRequest {
 
-    private static final long serialVersionUID = 8518764192674419586L;
+    private static final long serialVersionUID = ${serialVersionUID}L;
     /**
      * ID
      */

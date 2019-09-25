@@ -34,7 +34,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.changjinglu.domain.plugins.util.KeyUtil.createKey;
-
+/**
+ * <p> DownloadDriverRunnable </p>
+ * <p> 驱动包下载线程 </p>
+ * @since 2019/9/25 9:13 上午
+ * @author fengxiao
+ */
 public class DownloadDriverRunnable implements Runnable {
     /**
      * 驱动所在位置

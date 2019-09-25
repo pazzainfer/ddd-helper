@@ -1,18 +1,18 @@
-package com.changjinglu.lucup.controller.activity;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.controller;
 
 import com.changjinglu.api.common.response.*;
 import com.changjinglu.api.common.vo.ListWithPaginatorVO;
 import com.changjinglu.common.bean.BeanUtil;
-import com.changjinglu.lucup.api.activity.PlayerControllerApi;
-import com.changjinglu.lucup.domain.entity.PlayerEntity;
-import com.changjinglu.lucup.domain.factory.PlayerFactory;
-import com.changjinglu.lucup.domain.value.PlayerBuildVO;
-import com.changjinglu.lucup.interfaces.query.PlayerQueryRepositoryParam;
-import com.changjinglu.lucup.interfaces.vo.PageVO;
-import com.changjinglu.lucup.param.activity.*;
-import com.changjinglu.lucup.result.activity.PlayerDTO;
-import com.changjinglu.lucup.service.api.PlayerService;
-import com.changjinglu.lucup.interfaces.vo.PlayerVO;
+import ${config.basePackage}.api.${table.entityClass}ControllerApi;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.domain.factory.${table.entityClass}Factory;
+import ${config.basePackage}.domain.value.${table.entityClass}BuildVO;
+import ${config.basePackage}.interfaces.query.${table.entityClass}QueryRepositoryParam;
+import ${config.basePackage}.interfaces.vo.PageVO;
+import ${config.basePackage}.param.*;
+import ${config.basePackage}.result.${table.entityClass}DTO;
+import ${config.basePackage}.service.api.${table.entityClass}Service;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,93 +28,75 @@ import java.util.List;
 
 /**
  * <p>
- * 活动玩家 前端控制器
+ * ${table.tableComment} 前端控制器
  * </p>
  *
- * @author fengxiao
- * @since 2019-06-06
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @RestController
-@RequestMapping("/activity/player")
-@Api(value = "活动玩家API")
+#if( "$!config.moduleName" == "")
+@RequestMapping("/${table.entityClass}")
+#else
+@RequestMapping("/${config.moduleName}/${table.entityName}")
+#end
+@Api(value = "${table.tableComment}API")
 @Slf4j
-public class PlayerController implements PlayerControllerApi {
+public class ${table.entityClass}Controller implements ${table.entityClass}ControllerApi {
 
     @Resource
-    private PlayerService playerService;
+    private ${table.entityClass}Service ${table.entityName}Service;
     @Resource
-    private PlayerFactory playerFactory;
+    private ${table.entityClass}Factory ${table.entityName}Factory;
 
-    @ApiOperation(value = "活动玩家详情", notes = "活动玩家详情")
+    @ApiOperation(value = "${table.tableComment}详情", notes = "${table.tableComment}详情")
     @PostMapping(value = "/detail")
-    public PlainResult<PlayerDTO> detail(@RequestBody @ApiParam @Validated PlayerDetailParam param) throws RuntimeException {
-        return new PlainResult<>(BeanUtil.doTransfer(playerService.getById(param.getId()), PlayerDTO.class));
+    public PlainResult<${table.entityClass}DTO> detail(@RequestBody @ApiParam @Validated ${table.entityClass}DetailParam param) throws RuntimeException {
+        return new PlainResult<>(BeanUtil.doTransfer(${table.entityName}Service.getById(param.getId()), ${table.entityClass}DTO.class));
     }
 
-    @ApiOperation(value = "活动玩家登记", notes = "玩家登记报名")
+    @ApiOperation(value = "${table.tableComment}创建", notes = "${table.tableComment}创建")
     @PostMapping(value = "/sign")
     @Transactional(rollbackFor = Exception.class)
-    public PlainResult<PlayerDTO> sign(@RequestBody @ApiParam @Validated PlayerSignParam param) throws RuntimeException {
-        PlayerEntity playerEntity = playerFactory.perfect(BeanUtil.doTransfer(param, PlayerBuildVO.class));
-        playerEntity.create();
-        return new PlainResult<>(BeanUtil.doTransfer(playerEntity, PlayerDTO.class));
+    public PlainResult<${table.entityClass}DTO> create(@RequestBody @ApiParam @Validated ${table.entityClass}SignParam param) throws RuntimeException {
+        ${table.entityClass}Entity ${table.entityName}Entity = ${table.entityName}Factory.perfect(BeanUtil.doTransfer(param, ${table.entityClass}BuildVO.class));
+        ${table.entityName}Entity.create();
+        return new PlainResult<>(BeanUtil.doTransfer(${table.entityName}Entity, ${table.entityClass}DTO.class));
     }
 
-    @ApiOperation(value = "活动玩家更新", notes = "活动玩家更新")
+    @ApiOperation(value = "${table.tableComment}更新", notes = "${table.tableComment}更新")
     @PostMapping(value = "/update")
     @Transactional(rollbackFor = Exception.class)
-    public BaseResult update(@RequestBody @ApiParam @Validated PlayerUpdateParam param) throws RuntimeException {
-        PlayerEntity playerEntity = playerFactory.perfect(BeanUtil.doTransfer(param, PlayerBuildVO.class));
-        playerEntity.update();
-        return new PlainResult<>(BeanUtil.doTransfer(playerEntity, PlayerDTO.class));
+    public BaseResult update(@RequestBody @ApiParam @Validated ${table.entityClass}UpdateParam param) throws RuntimeException {
+        ${table.entityClass}Entity ${table.entityName}Entity = ${table.entityName}Factory.perfect(BeanUtil.doTransfer(param, ${table.entityClass}BuildVO.class));
+        ${table.entityName}Entity.update();
+        return new PlainResult<>(BeanUtil.doTransfer(${table.entityName}Entity, ${table.entityClass}DTO.class));
     }
 
-    @ApiOperation(value = "活动玩家审核", notes = "活动玩家审核")
-    @PostMapping(value = "/audit")
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult audit(@RequestBody @ApiParam @Validated PlayerAuditParam param) throws RuntimeException {
-        PlayerEntity playerEntity = playerFactory.buildWithIdAndStatusAndReason(
-                param.getId(), param.getStatus(), param.getReason()
-        );
-        playerEntity.update();
-        return new BaseResult();
-    }
-
-    @ApiOperation(value = "活动玩家得分更新", notes = "活动玩家得分更新")
-    @PostMapping(value = "/updateScore")
-    @Transactional(rollbackFor = Exception.class)
-    public BaseResult updateScore(@RequestBody @ApiParam @Validated PlayerUpdateScoreParam param) throws RuntimeException {
-        PlayerEntity playerEntity = playerFactory.buildWithIdAndScore(
-                param.getId(), param.getScore().doubleValue()
-        );
-        playerEntity.update();
-        return new BaseResult();
-    }
-
-    @ApiOperation(value = "综合查询参与玩家列表", notes = "综合查询条件查询参与玩家")
+    @ApiOperation(value = "综合查询${table.tableComment}列表", notes = "综合查询条件查询${table.tableComment}")
     @PostMapping(value = "/query")
-    public ListResult<PlayerDTO> query(
-            @RequestBody @ApiParam @Validated PlayerQueryParam param) throws RuntimeException {
-        PlayerQueryRepositoryParam playerQuery =
-                new PlayerQueryRepositoryParam();
-        BeanUtil.doTransfer(param, playerQuery);
-        return new ListResult<>(BeanUtil.doTransfer(playerService.query(playerQuery), PlayerDTO.class));
+    public ListResult<${table.entityClass}DTO> query(
+            @RequestBody @ApiParam @Validated ${table.entityClass}QueryParam param) throws RuntimeException {
+        ${table.entityClass}QueryRepositoryParam ${table.entityName}Query =
+                new ${table.entityClass}QueryRepositoryParam();
+        BeanUtil.doTransfer(param, ${table.entityClass}Query);
+        return new ListResult<>(BeanUtil.doTransfer(${table.entityName}Service.query(${table.entityName}Query), ${table.entityClass}DTO.class));
     }
 
-    @ApiOperation(value = "分页查询参与玩家列表", notes = "分页查询条件查询参与玩家")
+    @ApiOperation(value = "分页查询${table.tableComment}列表", notes = "分页查询条件查询${table.tableComment}")
     @PostMapping(value = "/pageQuery")
-    public PaginatorResult<PlayerDTO> pageQuery(
-            @RequestBody @ApiParam @Validated PlayerPageQueryParam param) throws RuntimeException {
-        PlayerQueryRepositoryParam playerQuery =
-                new PlayerQueryRepositoryParam();
-        BeanUtil.doTransfer(param, playerQuery);
-        PageVO<PlayerVO> pageVO = playerService.pageQuery(playerQuery);
+    public PaginatorResult<${table.entityClass}DTO> pageQuery(
+            @RequestBody @ApiParam @Validated ${table.entityClass}PageQueryParam param) throws RuntimeException {
+        ${table.entityClass}QueryRepositoryParam ${table.entityName}Query =
+                new ${table.entityClass}QueryRepositoryParam();
+        BeanUtil.doTransfer(param, ${table.entityClass}Query);
+        PageVO<${table.entityClass}VO> pageVO = ${table.entityName}Service.pageQuery(${table.entityName}Query);
 
         Paginator paginator = new Paginator((int) pageVO.getCurrent(),
                 (int) pageVO.getSize(), (int) pageVO.getTotal());
-        List<PlayerDTO> list = BeanUtil.doTransfer(pageVO.getRecords(), PlayerDTO.class);
+        List<${table.entityClass}DTO> list = BeanUtil.doTransfer(pageVO.getRecords(), ${table.entityClass}DTO.class);
 
-        ListWithPaginatorVO<PlayerDTO> paginatorVO = new ListWithPaginatorVO<>(paginator, list);
+        ListWithPaginatorVO<${table.entityClass}DTO> paginatorVO = new ListWithPaginatorVO<>(paginator, list);
 
         return new PaginatorResult<>(paginatorVO);
     }

@@ -1,10 +1,10 @@
-package com.changjinglu.lucup.domain.entity;
+package ${config.basePackage}.domain.entity;
 
 import com.changjinglu.api.common.util.BusinessPreconditions;
 import com.changjinglu.common.bean.BeanUtil;
-import com.changjinglu.lucup.constant.CommonErrorCode;
-import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
-import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+import ${config.basePackage}.constant.CommonErrorCode;
+import ${config.basePackage}.interfaces.repository.${table.entityClass}Repository;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,11 @@ import java.util.Date;
 
 /**
  * <p>
- * 活动信息
+ * ${table.tableComment}
  * </p>
  *
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,138 +31,37 @@ import java.util.Date;
 @NoArgsConstructor
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ActivityEntity extends BaseDeleteEntity implements Serializable {
+public class ${table.entityClass}Entity extends BaseDeleteEntity implements Serializable {
 
-    private static final long serialVersionUID = 5452175749923549548L;
+    private static final long serialVersionUID = ${serialVersionUID}L;
     @Resource
-    private ActivityRepository activityRepository;
+    private ${table.entityClass}Repository ${table.entityName}Repository;
 
+#foreach ( $column in $table.columns )
     /**
-     * 归属活动(默认0代表当前为主活动)
+     * ${column.columnComment}
      */
-    private Long pid;
-
-    /**
-     * 名称
-     */
-    private String name;
-
-    /**
-     * 活动类型/对用模板的子类型
-     */
-    private String type;
-
-    /**
-     * 活动类型名称
-     */
-    private String typeName;
-
-    /**
-     * 开始时间
-     */
-    private Date startTime;
-
-    /**
-     * 结束时间
-     */
-    private Date endTime;
-
-    /**
-     * 展示开始时间
-     */
-    private Date showStartTime;
-
-    /**
-     * 展示结束时间
-     */
-    private Date showEndTime;
-
-    /**
-     * 开奖时间
-     */
-    private Date distributeTime;
-
-    /**
-     * 状态 {@link com.changjinglu.lucup.constant.CommonStatus CommonStatus}
-     */
-    private Integer status;
-
-    /**
-     * 扩展信息(json格式)
-     */
-    private String attributes;
-
-    /**
-     * 素材模板ID
-     */
-    private Long materialTempId;
-
-    /**
-     * 素材模板名称
-     */
-    private String materialTempName;
-
-    /**
-     * 素材信息
-     */
-    private String materials;
-
-    /**
-     * 品牌logo
-     */
-    private String brandLogo;
-
-    /**
-     * 赞助商logo
-     */
-    private String sponsorLogo;
-
-    /**
-     * 备注
-     */
-    private String memo;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 修改人
-     */
-    private String modifier;
-
-
-    /**
-     * 是否主活动
-     * @return
-     */
-    public boolean isMainActivity(){
-        return pid == null || pid <= 0L;
-    }
+    private ${column.javaDataType.getSimpleName()} ${column.fieldName};
+#end
 
     /**
      * 创建
      */
     public void create(){
-        activityRepository.create(this);
+        ${table.entityName}Repository.create(this);
     }
     /**
      * 修改
      */
     public void update(){
-        activityRepository.update(this);
+        ${table.entityName}Repository.update(this);
     }
     /**
-     * 修改状态
+     * 主键查询
      */
-    public void updateStatus(){
-        activityRepository.updateStatus(id, status);
-    }
-
     public void getById() {
-        ActivityVO entity = activityRepository.getById(id);
-        BusinessPreconditions.checkNotNull(entity, CommonErrorCode.ACTIVITY_NOT_FOUND, id);
+        ${table.entityClass}VO entity = ${table.entityName}Repository.getById(id);
+        BusinessPreconditions.checkNotNull(entity, CommonErrorCode.NOT_FOUND, id);
         BeanUtil.doTransfer(entity, this);
     }
 }

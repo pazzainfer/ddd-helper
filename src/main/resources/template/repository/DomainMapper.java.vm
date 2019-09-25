@@ -1,16 +1,16 @@
-package com.changjinglu.lucup.activity.mapper;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.changjinglu.lucup.activity.domain.ActivityDO;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.domain.${table.entityClass}DO;
 
 /**
  * <p>
- * 活动信息 Mapper 接口
+ * ${table.tableComment} Mapper 接口
  * </p>
  *
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
-public interface ActivityMapper extends BaseMapper<ActivityDO> {
+public interface ${table.entityClass}Mapper extends BaseMapper<${table.entityClass}DO> {
 
 }

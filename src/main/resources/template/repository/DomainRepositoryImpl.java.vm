@@ -1,67 +1,69 @@
-package com.changjinglu.lucup.activity.repository;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.repository;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.changjinglu.common.bean.BeanUtil;
-import com.changjinglu.lucup.activity.domain.ActivityDO;
-import com.changjinglu.lucup.activity.manager.IActivityManager;
-import com.changjinglu.lucup.activity.query.ActivityQuery;
-import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.interfaces.query.DomainRepositoryQuery;
-import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
-import com.changjinglu.lucup.interfaces.vo.ActivityVO;
-import com.changjinglu.lucup.interfaces.vo.PageVO;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.domain.${table.entityClass}DO;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.manager.I${table.entityClass}Manager;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.query.${table.entityClass}Query;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.interfaces.query.${table.entityClass}RepositoryQuery;
+import ${config.basePackage}.interfaces.repository.${table.entityClass}Repository;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
+import ${config.basePackage}.interfaces.vo.PageVO;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p> ActivityRepositoryImpl </p>
- * <p> 活动仓储实现 </p>
+ * <p> ${table.entityClass}RepositoryImpl </p>
+ * <p> ${table.tableComment}仓储实现 </p>
  *
- * @author fengxiao
- * @since 2019-08-26 21:06
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Component
-public class ActivityRepositoryImpl implements ActivityRepository {
+public class ${table.entityClass}RepositoryImpl implements ${table.entityClass}Repository {
     @Resource
-    private IActivityManager activityManager;
+    private I${table.entityClass}Manager ${table.entityName}Manager;
 
     @Override
-    public void create(ActivityEntity activityEntity) {
-        ActivityDO activityDO = BeanUtil.doTransfer(activityEntity, ActivityDO.class);
-        activityManager.save(activityDO);
-        activityEntity.setId(activityDO.getId());
+    public void create(${table.entityClass}Entity ${table.entityName}Entity) {
+        ${table.entityClass}DO ${table.entityName}DO = BeanUtil.doTransfer(${table.entityName}Entity, ${table.entityClass}DO.class);
+        ${table.entityName}Manager.save(${table.entityName}DO);
+        ${table.entityName}Entity.setId(${table.entityName}DO.getId());
     }
 
     @Override
-    public void update(ActivityEntity activityEntity) {
-        activityManager.updateById(BeanUtil.doTransfer(activityEntity, ActivityDO.class));
+    public void update(${table.entityClass}Entity ${table.entityName}Entity) {
+        ${table.entityName}Manager.updateById(BeanUtil.doTransfer(${table.entityName}Entity, ${table.entityClass}DO.class));
     }
 
     @Override
-    public void updateStatus(Long id, Integer status) {
-        ActivityDO activityDO = new ActivityDO();
-        activityDO.setId(id);
-        activityDO.setStatus(status);
-        activityManager.updateById(activityDO);
-    }
-
-    @Override
-    public ActivityVO getById(Long id) {
-        ActivityDO activityDO = activityManager.getById(id);
-        if(activityDO != null){
-            return BeanUtil.doTransfer(activityDO, ActivityVO.class);
+    public ${table.entityClass}VO getById(Long id) {
+        ${table.entityClass}DO ${table.entityName}DO = ${table.entityName}Manager.getById(id);
+        if(${table.entityName}DO != null){
+            return BeanUtil.doTransfer(${table.entityName}DO, ${table.entityClass}VO.class);
         }
         return null;
     }
+    
+    @Override
+    public List<${table.entityClass}VO> query(${table.entityClass}RepositoryQuery query) {
+        List<${table.entityClass}VO> resultList = Lists.newArrayList();
+        List<${table.entityClass}DO> doList = ${table.entityName}Manager.query(BeanUtil.doTransfer(query, ${table.entityClass}Query.class));
+        if(CollectionUtils.isNotEmpty(doList)){
+            resultList = BeanUtil.doTransfer(doList, ${table.entityClass}VO.class);
+        }
+        return resultList;
+    }
 
     @Override
-    public PageVO<ActivityVO> pageQuery(DomainRepositoryQuery activityQuery) {
-        IPage<ActivityDO> pageResult = activityManager.pageQuery(
-                BeanUtil.doTransfer(activityQuery, ActivityQuery.class)
+    public PageVO<${table.entityClass}VO> pageQuery(${table.entityClass}RepositoryQuery ${table.entityName}Query) {
+        IPage<${table.entityClass}DO> pageResult = ${table.entityName}Manager.pageQuery(
+                BeanUtil.doTransfer(${table.entityName}Query, ${table.entityClass}Query.class)
         );
 
-        List<ActivityVO> list = BeanUtil.doTransfer(pageResult.getRecords(), ActivityVO.class);
+        List<${table.entityClass}VO> list = BeanUtil.doTransfer(pageResult.getRecords(), ${table.entityClass}VO.class);
 
         return new PageVO<>(list, pageResult.getTotal(), pageResult.getSize(), pageResult.getCurrent());
     }

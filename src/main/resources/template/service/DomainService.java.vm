@@ -1,39 +1,39 @@
-package com.changjinglu.lucup.service.api;
+package ${config.basePackage}.service.api;
 
-import com.changjinglu.lucup.interfaces.vo.PageVO;
-import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.interfaces.query.DomainRepositoryQuery;
-import com.changjinglu.lucup.interfaces.vo.ActivityVO;
+import ${config.basePackage}.interfaces.vo.PageVO;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.interfaces.query.${table.entityClass}RepositoryQuery;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
 
 /**
- * <p> ActivityService </p>
- * <p> 活动服务接口 </p>
+ * <p> ${table.entityClass}Service </p>
+ * <p> ${table.tableComment}服务接口 </p>
  *
- * @author fengxiao
- * @since 2019-08-26 15:27
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
-public interface ActivityService {
+public interface ${table.entityClass}Service {
     /**
      * 创建
-     * @param activityEntity
+     * @param ${table.entityName}Entity
      */
-    void create(ActivityEntity activityEntity);
+    void create(${table.entityClass}Entity ${table.entityName}Entity);
     /**
      * 修改
-     * @param activityEntity
+     * @param ${table.entityName}Entity
      */
-    void update(ActivityEntity activityEntity);
+    void update(${table.entityClass}Entity ${table.entityName}Entity);
     /**
      * 根据ID查询
      * @param id
      * @return
      */
-    ActivityVO getById(Long id);
+    ${table.entityClass}VO getById(Long id);
 
     /**
      * 分页查询
-     * @param activityQuery
+     * @param ${table.entityName}Query
      * @return
      */
-    PageVO<ActivityVO> pageQuery(DomainRepositoryQuery activityQuery);
+    PageVO<${table.entityClass}VO> pageQuery(${table.entityClass}RepositoryQuery ${table.entityName}Query);
 }

@@ -4,9 +4,12 @@ import com.changjinglu.domain.plugins.Holder;
 import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.entity.GeneratorFile;
 import com.changjinglu.domain.plugins.entity.Table;
+import com.changjinglu.domain.plugins.util.StringHelper;
 import com.changjinglu.domain.plugins.util.WindowUtil;
 import com.intellij.openapi.ui.Messages;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.List;
@@ -18,12 +21,19 @@ import java.util.List;
  */
 public class SelectTablesFrame extends JFrame {
 
+    private SelectTables selectTablesHolder;
+    private List<Table> tableList;
+
     public SelectTablesFrame(List<Table> tableList) {
         super(LocaleContextHolder.format("select_database_tables"));
+        this.tableList = tableList;
         this.setMinimumSize(new Dimension(600, 400));
 
         int rowCount = tableList.size();
-        SelectTables selectTablesHolder = new SelectTables(tableList);
+        selectTablesHolder = new SelectTables(tableList);
+
+        selectTablesHolder.getRemovedPrefix().getDocument().addDocumentListener(new ConfigUpdateListener());
+
         JTable table = selectTablesHolder.getTblTableSchema();
         table.setModel(new AbstractTableModel() {
             private static final long serialVersionUID = 8974669315458199207L;
@@ -77,7 +87,7 @@ public class SelectTablesFrame extends JFrame {
                     case 2:
                         return tableList.get(rowIndex).getTableName();
                     case 3:
-                        return tableList.get(rowIndex).getEntityName();
+                        return tableList.get(rowIndex).getEntityClass();
                     case 4:
                         return tableList.get(rowIndex).getTableComment();
                     default:
@@ -92,7 +102,7 @@ public class SelectTablesFrame extends JFrame {
                         tableList.get(rowIndex).setSelected((Boolean) aValue);
                         break;
                     case 3:
-                        tableList.get(rowIndex).setEntityName(aValue.toString());
+                        tableList.get(rowIndex).setEntityClass(aValue.toString());
                         break;
                     case 4:
                         tableList.get(rowIndex).setTableComment(aValue.toString());
@@ -148,8 +158,37 @@ public class SelectTablesFrame extends JFrame {
             new SelectFilesFrame(tableList, GeneratorFile.buildByEnum());
             // 释放数据库设置窗口
             this.dispose();
-            // 开始生成
-//            ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(tableList, config));
         });
+    }
+
+    /**
+     * 连接URL变更处理监听器
+     */
+    private class ConfigUpdateListener implements DocumentListener {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            SelectTablesFrame.this.updateTable();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            SelectTablesFrame.this.updateTable();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            SelectTablesFrame.this.updateTable();
+        }
+    }
+
+    /**
+     * 根据输入配置动态更新表格数据
+     */
+    private void updateTable(){
+        String prefix = selectTablesHolder.getRemovedPrefix().getText();
+        for (Table t : tableList) {
+            t.setEntityClass(StringHelper.parseTableName(t.getTableName(), prefix));
+        }
+        selectTablesHolder.getTblTableSchema().updateUI();
     }
 }

@@ -15,6 +15,14 @@ import java.util.List;
 public class GeneratorConfig implements Serializable {
     private static final long serialVersionUID = -5510352536334672472L;
     /**
+     * 作者名
+     */
+    private String author;
+    /**
+     * 日期字符串
+     */
+    private String dateStr;
+    /**
      * 基础包名
      */
     private String basePackage;
@@ -30,4 +38,8 @@ public class GeneratorConfig implements Serializable {
      * 文件集合
      */
     private List<GeneratorFile> fileList;
+    /**
+     * 排除的字段集合
+     */
+    private List<String> excludeFields;
 }
