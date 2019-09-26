@@ -14,6 +14,8 @@ import com.intellij.openapi.ui.Messages;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import static com.changjinglu.domain.plugins.util.KeyUtil.createKey;
@@ -37,6 +39,8 @@ public class SelectFilesFrame extends JFrame {
         int rowCount = fileList.size();
         selectTablesHolder = new SelectFiles(fileList);
         initFormField();
+
+
         JTable table = selectTablesHolder.getTblTableSchema();
         table.setModel(new AbstractTableModel() {
             private static final long serialVersionUID = 8101289068997810922L;
@@ -158,6 +162,12 @@ public class SelectFilesFrame extends JFrame {
             // 开始生成
             ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(tableList, fileList));
         });
+
+        this.addKeyListener(new KeyListener());
+        selectTablesHolder.getAuthor().addKeyListener(new KeyListener());
+        selectTablesHolder.getExcludeFields().addKeyListener(new KeyListener());
+        selectTablesHolder.getBasePackage().addKeyListener(new KeyListener());
+        selectTablesHolder.getTblTableSchema().addKeyListener(new KeyListener());
     }
 
 
@@ -185,5 +195,18 @@ public class SelectFilesFrame extends JFrame {
         selectTablesHolder.getBasePackage().setText(applicationProperties.getValue(createKey("basePackage"), ""));
         selectTablesHolder.getModuleName().setText(applicationProperties.getValue(createKey("moduleName"), ""));
         selectTablesHolder.getExcludeFields().setText(applicationProperties.getValue(createKey("excludeFields"), "id,createdAt,updatedAt"));
+    }
+
+    /**
+     * 快捷键监听器
+     */
+    private class KeyListener extends KeyAdapter {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                SelectFilesFrame.this.setVisible(false);
+                SelectFilesFrame.this.dispose();
+            }
+        }
     }
 }

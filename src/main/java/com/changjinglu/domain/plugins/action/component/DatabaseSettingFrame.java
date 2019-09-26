@@ -29,6 +29,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
@@ -73,7 +75,18 @@ public class DatabaseSettingFrame extends JFrame {
         databaseSettings.getUseSSL().addChangeListener(e -> DatabaseSettingFrame.this.updateConnectionUrl(false));
         this.setVisible(true);
 
-        // 注册取消事件
+        this.addKeyListener(new KeyListener());
+        databaseSettings.getTextHost().addKeyListener(new KeyListener());
+        databaseSettings.getTextPort().addKeyListener(new KeyListener());
+        databaseSettings.getTextUsername().addKeyListener(new KeyListener());
+        databaseSettings.getTextPassword().addKeyListener(new KeyListener());
+        databaseSettings.getTextDatabase().addKeyListener(new KeyListener());
+        databaseSettings.getTextConnectionUrl().addKeyListener(new KeyListener());
+        databaseSettings.getUseSSL().addKeyListener(new KeyListener());
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+
+    // 注册取消事件
         databaseSettings.getBtnCancel().addActionListener(event -> this.dispose());
         // 注册语言切换事件
         databaseSettings.getCbxSelectLanguage().addItemListener(itemEvent -> {
@@ -407,5 +420,17 @@ public class DatabaseSettingFrame extends JFrame {
         }
     }
 
+    /**
+     * 快捷键监听器
+     */
+    private class KeyListener extends KeyAdapter {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                DatabaseSettingFrame.this.setVisible(false);
+                DatabaseSettingFrame.this.dispose();
+            }
+        }
+    }
 
 }

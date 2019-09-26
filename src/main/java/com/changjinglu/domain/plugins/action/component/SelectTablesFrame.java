@@ -13,6 +13,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 /**
  * <p> SelectTablesFrame </p>
@@ -160,6 +162,10 @@ public class SelectTablesFrame extends JFrame {
             // 释放数据库设置窗口
             this.dispose();
         });
+
+        this.addKeyListener(new KeyListener());
+        selectTablesHolder.getRemovedPrefix().addKeyListener(new KeyListener());
+        selectTablesHolder.getTblTableSchema().addKeyListener(new KeyListener());
     }
 
     /**
@@ -191,5 +197,18 @@ public class SelectTablesFrame extends JFrame {
             t.setEntityClass(StringHelper.parseTableName(t.getTableName(), prefix));
         }
         selectTablesHolder.getTblTableSchema().updateUI();
+    }
+
+    /**
+     * 快捷键监听器
+     */
+    private class KeyListener extends KeyAdapter {
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                SelectTablesFrame.this.setVisible(false);
+                SelectTablesFrame.this.dispose();
+            }
+        }
     }
 }

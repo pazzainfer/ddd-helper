@@ -34,7 +34,10 @@
                     id="com.changjinglu.domain.plugins.action.GeneratorAction"
                     class="com.changjinglu.domain.plugins.action.GeneratorAction"
                     text="DDD Code Generate"
-                    description="Domain-Driver Design style code generate" >
+                    description="Domain-Driver Design style code generate">
+                <keyboard-shortcut first-keystroke="alt shift J" keymap="$default" />
+                <keyboard-shortcut first-keystroke="meta shift J" keymap="Mac OS X" remove="true" />
+                <keyboard-shortcut first-keystroke="meta shift J" keymap="Mac OS X 10.5+" remove="true" />
             </action>
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </group>
