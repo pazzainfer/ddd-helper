@@ -7,6 +7,7 @@ import com.changjinglu.domain.plugins.adapter.DatabaseDrivers;
 import com.changjinglu.domain.plugins.adapter.DriverDelegate;
 import com.changjinglu.domain.plugins.entity.Table;
 import com.changjinglu.domain.plugins.entity.TableSchema;
+import com.changjinglu.domain.plugins.util.PropertiesConstants;
 import com.changjinglu.domain.plugins.util.StringHelper;
 import com.changjinglu.domain.plugins.util.WindowUtil;
 import com.intellij.ide.util.PropertiesComponent;
@@ -142,10 +143,10 @@ public class DatabaseSettingFrame extends JFrame {
                             // driver not loaded
                             ApplicationManager.getApplication().invokeAndWait(() -> {
                                 int selectButton = Messages.showOkCancelDialog(Holder.getEvent().getProject(),
-                                        LocaleContextHolder.format("driver_not_found", Holder.getDatabaseDrivers().getDriverClass()),
+                                        LocaleContextHolder.format(PropertiesConstants.PROP_DRIVER_NOT_FOUND, Holder.getDatabaseDrivers().getDriverClass()),
                                         Holder.getApplicationProperties().getValue("button_ok", "Ok"),
                                         Holder.getApplicationProperties().getValue("button_cancel", "Cancel"),
-                                        LocaleContextHolder.format("prompt"),
+                                        LocaleContextHolder.format(PropertiesConstants.PROP_PROMPT),
                                         Messages.getQuestionIcon());
                                 if (selectButton == Messages.OK) {
                                     new DownloadDriverRunnable(DatabaseSettingFrame.this,
@@ -163,7 +164,7 @@ public class DatabaseSettingFrame extends JFrame {
                 } catch (ReflectiveOperationException | SQLException e1) {
                     ApplicationManager.getApplication().invokeLater(() -> Notifications.Bus
                             .notify(new Notification("DatabaseSettingFrame", "Error",
-                                    LocaleContextHolder.format("database_not_exists", Holder.getDatabaseDrivers().getDriverClass()),
+                                    LocaleContextHolder.format(PropertiesConstants.PROP_DATABASE_NOT_EXISTS, Holder.getDatabaseDrivers().getDriverClass()),
                                     NotificationType.ERROR)));
                     return;
                 }
@@ -174,7 +175,7 @@ public class DatabaseSettingFrame extends JFrame {
                 } catch (SQLException se) {
                     ApplicationManager.getApplication().invokeLater(() -> Notifications.Bus
                             .notify(new Notification("DatabaseSettingFrame", "Error",
-                                    LocaleContextHolder.format("connect_to_database_failed",
+                                    LocaleContextHolder.format(PropertiesConstants.PROP_CONNECT_DB_FAILED,
                                             se.getErrorCode(), se.getSQLState(), se.getLocalizedMessage()), NotificationType.ERROR)));
                     log.error("connect to database failed", se);
                     return;

@@ -3,6 +3,7 @@ package com.changjinglu.domain.plugins.generate;
 import com.changjinglu.domain.plugins.Holder;
 import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.entity.*;
+import com.changjinglu.domain.plugins.util.PropertiesConstants;
 import com.google.common.collect.Lists;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.notification.Notification;
@@ -71,8 +72,8 @@ public class GeneratorRunner implements Runnable {
         ApplicationManager.getApplication()
                 .invokeLater(() -> Notifications.Bus.notify(
                         new Notification("GeneratorRunner",
-                                LocaleContextHolder.format("prompt"),
-                                LocaleContextHolder.format("generate_success"),
+                                LocaleContextHolder.format(PropertiesConstants.PROP_PROMPT),
+                                LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_SUCCESS),
                                 NotificationType.INFORMATION)));
     }
 

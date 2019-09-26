@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.changjinglu'
-version '1.0.0-SNAPSHOT'
+version '1.0.0'
 
 sourceCompatibility = 1.8
 
@@ -29,12 +29,17 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.2.1'
+    version 'IC-2018.2'
+    pluginName 'DDD Helper'
+    updateSinceUntilBuild false
 }
+
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      <ul>
+        <li>1.0.0 project init, a code generate action for domain driver design framework.</li>
+      </ul>
+      """
 }
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"

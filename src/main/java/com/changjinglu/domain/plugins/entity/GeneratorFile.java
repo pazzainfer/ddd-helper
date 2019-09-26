@@ -2,8 +2,8 @@ package com.changjinglu.domain.plugins.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class GeneratorFile {
      * @return
      */
     public static List<GeneratorFile> buildByEnum(){
-        List<GeneratorFile> list = Lists.newArrayList();
+        List<GeneratorFile> list = new ArrayList<>();
         Arrays.stream(FileType.values()).forEach(t -> list.add(new GeneratorFile(true, t)));
         return list;
     }

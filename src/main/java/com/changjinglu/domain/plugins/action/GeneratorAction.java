@@ -22,7 +22,7 @@ public class GeneratorAction extends AnAction {
 
     public GeneratorAction() {
         super(LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_ACTION_TITLE),
-                LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_ACTION_TITLE),
+                LocaleContextHolder.format(PropertiesConstants.PROP_GENERATE_ACTION_DESC),
                 IconLoader.getIcon(Constants.ICON_GENERATE));
     }
 

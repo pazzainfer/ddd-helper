@@ -4,6 +4,7 @@ import com.changjinglu.domain.plugins.Holder;
 import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.entity.GeneratorFile;
 import com.changjinglu.domain.plugins.entity.Table;
+import com.changjinglu.domain.plugins.util.PropertiesConstants;
 import com.changjinglu.domain.plugins.util.StringHelper;
 import com.changjinglu.domain.plugins.util.WindowUtil;
 import com.intellij.openapi.ui.Messages;
@@ -25,7 +26,7 @@ public class SelectTablesFrame extends JFrame {
     private List<Table> tableList;
 
     public SelectTablesFrame(List<Table> tableList) {
-        super(LocaleContextHolder.format("select_database_tables"));
+        super(LocaleContextHolder.format(PropertiesConstants.PROP_SELECT_TABLES));
         this.tableList = tableList;
         this.setMinimumSize(new Dimension(600, 400));
 
@@ -38,11 +39,11 @@ public class SelectTablesFrame extends JFrame {
         table.setModel(new AbstractTableModel() {
             private static final long serialVersionUID = 8974669315458199207L;
             String[] columns = {
-                    LocaleContextHolder.format("table_selected"),
-                    LocaleContextHolder.format("table_sequence"),
-                    LocaleContextHolder.format("table_table_name"),
-                    LocaleContextHolder.format("table_class_name"),
-                    LocaleContextHolder.format("table_class_comment")
+                    LocaleContextHolder.format(PropertiesConstants.PROP_TABLE_SELECTED),
+                    LocaleContextHolder.format(PropertiesConstants.PROP_TABLE_SEQUENCE),
+                    LocaleContextHolder.format(PropertiesConstants.PROP_TABLE_NAME),
+                    LocaleContextHolder.format(PropertiesConstants.PROP_TABLE_CLASS_NAME),
+                    LocaleContextHolder.format(PropertiesConstants.PROP_TABLE_CLASS_COMMENT)
             };
 
             @Override
@@ -147,8 +148,8 @@ public class SelectTablesFrame extends JFrame {
         selectTablesHolder.getBtnNext().addActionListener(event -> {
             if (tableList.stream().noneMatch(Table::isSelected)) {
                 Messages.showWarningDialog(Holder.getEvent().getProject(),
-                        LocaleContextHolder.format("at_least_select_one_table"),
-                        LocaleContextHolder.format("prompt"));
+                        LocaleContextHolder.format(PropertiesConstants.PROP_AT_LEASE_SELECT_ONE_TABLE),
+                        PropertiesConstants.PROP_PROMPT);
                 return;
             }
             // 释放窗口

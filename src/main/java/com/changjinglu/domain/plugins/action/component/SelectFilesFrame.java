@@ -5,6 +5,7 @@ import com.changjinglu.domain.plugins.LocaleContextHolder;
 import com.changjinglu.domain.plugins.entity.GeneratorFile;
 import com.changjinglu.domain.plugins.entity.Table;
 import com.changjinglu.domain.plugins.generate.GeneratorRunner;
+import com.changjinglu.domain.plugins.util.PropertiesConstants;
 import com.changjinglu.domain.plugins.util.WindowUtil;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
@@ -29,7 +30,7 @@ public class SelectFilesFrame extends JFrame {
     private SelectFiles selectTablesHolder;
 
     public SelectFilesFrame(List<Table> tableList, List<GeneratorFile> fileList) {
-        super(LocaleContextHolder.format("select_files"));
+        super(LocaleContextHolder.format(PropertiesConstants.PROP_SELECT_FILES));
         this.tableList = tableList;
         this.setMinimumSize(new Dimension(600, 400));
 
@@ -40,8 +41,8 @@ public class SelectFilesFrame extends JFrame {
         table.setModel(new AbstractTableModel() {
             private static final long serialVersionUID = 8101289068997810922L;
             String[] columns = {
-                    LocaleContextHolder.format("file_table_selected"),
-                    LocaleContextHolder.format("file_table_type")
+                    LocaleContextHolder.format(PropertiesConstants.PROP_FILE_TABLE_SELECTED),
+                    LocaleContextHolder.format(PropertiesConstants.PROP_FILE_TABLE_TYPE)
             };
 
             @Override
@@ -148,8 +149,8 @@ public class SelectFilesFrame extends JFrame {
             saveFormField(author, basePackage, module, excludeFields);
             if (fileList.stream().noneMatch(GeneratorFile::isSelected)) {
                 Messages.showWarningDialog(Holder.getEvent().getProject(),
-                        LocaleContextHolder.format("at_least_select_one_file"),
-                        LocaleContextHolder.format("prompt"));
+                        LocaleContextHolder.format(PropertiesConstants.PROP_AT_LEASE_SELECT_ONE_FILE),
+                        LocaleContextHolder.format(PropertiesConstants.PROP_PROMPT));
                 return;
             }
             // 释放窗口
