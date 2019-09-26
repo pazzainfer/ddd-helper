@@ -1,45 +1,48 @@
-package com.changjinglu.lucup.interfaces.repository;
+package ${config.basePackage}.interfaces.repository;
 
-import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
-import com.changjinglu.lucup.interfaces.vo.ActivityVO;
-import com.changjinglu.lucup.interfaces.vo.PageVO;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.interfaces.query.${table.entityClass}RepositoryQuery;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
+import ${config.basePackage}.interfaces.vo.PageVO;
+import java.util.List;
 
 /**
- * <p> ActivityRepository </p>
- * <p> 活动仓储接口 </p>
- * @since 2019-08-26 11:17
- * @author fengxiao
+ * <p> ${table.entityClass}Repository </p>
+ * <p> ${table.tableComment}仓储接口 </p>
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
-public interface ActivityRepository {
+public interface ${table.entityClass}Repository {
     /**
-     * 创建活动
-     * @param activityEntity
+     * 创建${table.tableComment}
+     * @param ${table.entityName}Entity
      */
-    void create(ActivityEntity activityEntity);
+    void create(${table.entityClass}Entity ${table.entityName}Entity);
+
     /**
-     * 更新活动
-     * @param activityEntity
+     * 更新${table.tableComment}
+     * @param ${table.entityName}Entity
      */
-    void update(ActivityEntity activityEntity);
-    /**
-     * 修改活动状态
-     * @param id
-     * @param status
-     */
-    void updateStatus(Long id, Integer status);
+    void update(${table.entityClass}Entity ${table.entityName}Entity);
 
     /**
      * 查询详情
      * @param id
      * @return
      */
-    ActivityVO getById(Long id);
+    ${table.entityClass}VO getById(Long id);
+
+    /**
+     * 查询
+     * @param ${table.entityName}Query
+     * @return
+     */
+    List<${table.entityClass}VO> query(${table.entityClass}RepositoryQuery ${table.entityName}Query);
 
     /**
      * 分页查询
-     * @param activityQuery
+     * @param ${table.entityName}Query
      * @return
      */
-    PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery);
+    PageVO<${table.entityClass}VO> pageQuery(${table.entityClass}RepositoryQuery ${table.entityName}Query);
 }

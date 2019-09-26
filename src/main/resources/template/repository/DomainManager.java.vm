@@ -1,17 +1,16 @@
-package com.changjinglu.lucup.activity.manager;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.manager;
 
 import com.changjinglu.common.mybatis.ICommonManager;
-import com.changjinglu.lucup.activity.domain.ActivityDO;
-import com.changjinglu.lucup.activity.query.ActivityQuery;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.domain.${table.entityClass}DO;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.query.${table.entityClass}Query;
 
 /**
  * <p>
- * 活动信息 服务类
+ * ${table.tableComment} 仓储DB管理接口
  * </p>
- *
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
-public interface IActivityManager extends ICommonManager<ActivityDO, ActivityQuery> {
+public interface I${table.entityClass}Manager extends ICommonManager<${table.entityClass}DO, ${table.entityClass}Query> {
 
 }

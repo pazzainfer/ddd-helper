@@ -1,4 +1,4 @@
-package com.changjinglu.lucup.activity.query;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.query;
 
 import com.changjinglu.common.mybatis.BaseQuery;
 import com.changjinglu.common.mybatis.QueryField;
@@ -10,102 +10,16 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 
 /**
- * 活动查询对象
- * @author fengxiao
- * @since 2019-06-06 13:55
+ * ${table.tableComment}查询对象
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ActivityQuery extends BaseQuery {
+public class ${table.entityClass}Query extends BaseQuery {
     /**
      * 主键ID
      */
     private Long id;
-    /**
-     * 父活动ID
-     */
-    private Long pid;
-    /**
-     * 名称
-     */
-    @QueryField(queryType = QueryType.LIKE)
-    private String name;
-    /**
-     * 活动类型
-     */
-    private String type;
-    /**
-     * 活动类型名称
-     */
-    @QueryField(queryType = QueryType.LIKE)
-    private String typeName;
-    /**
-     * 状态
-     */
-    private Integer status;
-    /**
-     * 素材模板ID
-     */
-    private Long materialTempId;
-
-    /**
-     * 开始时间下限
-     */
-    @QueryField(queryType = QueryType.GE, column = "start_time")
-    private Date startTimeLower;
-
-    /**
-     * 开始时间上限
-     */
-    @QueryField(queryType = QueryType.LE, column = "start_time")
-    private Date startTimeUpper;
-
-    /**
-     * 结束时间下限
-     */
-    @QueryField(queryType = QueryType.GE, column = "end_time")
-    private Date endTimeLower;
-
-    /**
-     * 结束时间上限
-     */
-    @QueryField(queryType = QueryType.LE, column = "end_time")
-    private Date endTimeUpper;
-
-    /**
-     * 展示开始时间下限
-     */
-    @QueryField(queryType = QueryType.GE, column = "show_start_time")
-    private Date showStartTimeLower;
-
-    /**
-     * 展示开始时间上限
-     */
-    @QueryField(queryType = QueryType.LE, column = "show_start_time")
-    private Date showStartTimeUpper;
-
-    /**
-     * 展示结束时间下限
-     */
-    @QueryField(queryType = QueryType.GE, column = "show_end_time")
-    private Date showEndTimeLower;
-
-    /**
-     * 展示结束时间上限
-     */
-    @QueryField(queryType = QueryType.LE, column = "show_end_time")
-    private Date showEndTimeUpper;
-
-    /**
-     * 开奖时间下限
-     */
-    @QueryField(queryType = QueryType.GE, column = "distribute_time")
-    private Date distributeTimeLower;
-
-    /**
-     * 开奖时间上限
-     */
-    @QueryField(queryType = QueryType.LE, column = "distribute_time")
-    private Date distributeTimeUpper;
 }

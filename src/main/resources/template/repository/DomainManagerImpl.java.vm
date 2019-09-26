@@ -1,20 +1,19 @@
-package com.changjinglu.lucup.activity.manager.impl;
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.manager.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.changjinglu.lucup.activity.domain.ActivityDO;
-import com.changjinglu.lucup.activity.manager.IActivityManager;
-import com.changjinglu.lucup.activity.mapper.ActivityMapper;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.domain.${table.entityClass}DO;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.manager.I${table.entityClass}Manager;
+import ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.mapper.${table.entityClass}Mapper;
 import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 活动信息 服务实现类
+ * ${table.tableComment} 仓储DB管理实现
  * </p>
- *
- * @author fengxiao
- * @since 2019-06-03
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Service
-public class ActivityManagerImpl extends ServiceImpl<ActivityMapper, ActivityDO> implements IActivityManager {
+public class ${table.entityClass}ManagerImpl extends ServiceImpl<${table.entityClass}Mapper, ${table.entityClass}DO> implements I${table.entityClass}Manager {
 
 }

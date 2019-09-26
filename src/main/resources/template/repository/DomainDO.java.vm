@@ -1,0 +1,36 @@
+package ${config.basePackage}#if("$!{config.moduleName}"!="").${config.moduleName}#end.domain;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import ${config.basePackage}.domain.BaseDeleteDO;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.LocalDateTime;
+
+/**
+ * <p>
+ * ${table.tableComment} 仓储实体
+ * </p>
+ * @author ${config.author}
+ * @since ${config.dateStr}
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("${table.tableName}")
+public class ${table.entityClass}DO extends BaseDeleteDO implements Serializable {
+
+    private static final long serialVersionUID = ${serialVersionUID}L;
+#foreach ( $column in $table.columns )
+    /**
+     * ${column.columnComment}
+     */
+#if("${column.javaDataType.getSimpleName()}" == "Date" || "${column.javaDataType.getSimpleName()}" == "LocalDateTime")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+#end
+    private ${column.javaDataType.getSimpleName()} ${column.fieldName};
+#end
+}

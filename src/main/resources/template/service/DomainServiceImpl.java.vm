@@ -1,46 +1,46 @@
-package com.changjinglu.lucup.service.activity.impl;
+package ${config.basePackage}.service#if("$!{config.moduleName}"!="").${config.moduleName}#end.impl;
 
-import com.changjinglu.lucup.domain.entity.ActivityEntity;
-import com.changjinglu.lucup.domain.factory.ActivityFactory;
-import com.changjinglu.lucup.interfaces.param.ActivityQueryRepositoryParam;
-import com.changjinglu.lucup.interfaces.repository.ActivityRepository;
-import com.changjinglu.lucup.interfaces.vo.ActivityVO;
-import com.changjinglu.lucup.interfaces.vo.PageVO;
-import com.changjinglu.lucup.service.api.ActivityService;
+import ${config.basePackage}.domain.entity.${table.entityClass}Entity;
+import ${config.basePackage}.domain.factory.${table.entityClass}Factory;
+import ${config.basePackage}.interfaces.query.${table.entityClass}RepositoryQuery;
+import ${config.basePackage}.interfaces.repository.${table.entityClass}Repository;
+import ${config.basePackage}.interfaces.vo.${table.entityClass}VO;
+import ${config.basePackage}.interfaces.vo.PageVO;
+import ${config.basePackage}.service.api.${table.entityClass}Service;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * 活动服务实现
- * @author fengxiao
- * @since 2019-06-18 10:52
+ * ${table.tableComment}服务实现
+ * @author ${config.author}
+ * @since ${config.dateStr}
  */
 @Component
-public class ActivityServiceImpl implements ActivityService {
+public class ${table.entityClass}ServiceImpl implements ${table.entityClass}Service {
     @Resource
-    private ActivityFactory activityFactory;
+    private ${table.entityClass}Factory ${table.entityName}Factory;
     @Resource
-    private ActivityRepository activityRepository;
+    private ${table.entityClass}Repository ${table.entityName}Repository;
 
     @Override
-    public void create(ActivityEntity activityEntity) {
-        activityEntity.create();
+    public void create(${table.entityClass}Entity ${table.entityName}Entity) {
+        ${table.entityName}Entity.create();
     }
 
     @Override
-    public void update(ActivityEntity activityEntity) {
-        activityEntity.update();
+    public void update(${table.entityClass}Entity ${table.entityName}Entity) {
+        ${table.entityName}Entity.update();
     }
 
     @Override
-    public ActivityVO getById(Long id) {
-        return activityRepository.getById(id);
+    public ${table.entityClass}VO getById(Long id) {
+        return ${table.entityName}Repository.getById(id);
     }
 
 
     @Override
-    public PageVO<ActivityVO> pageQuery(ActivityQueryRepositoryParam activityQuery) {
-        return activityRepository.pageQuery(activityQuery);
+    public PageVO<${table.entityClass}VO> pageQuery(${table.entityClass}RepositoryQuery ${table.entityName}Query) {
+        return ${table.entityName}Repository.pageQuery(${table.entityName}Query);
     }
 
 }
