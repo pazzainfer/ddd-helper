@@ -1,2 +1,2 @@
 # ddd-helper
-A tools for ddd develop framework
+A Plug-in Tool Based on Domain-Driven Design Framework
